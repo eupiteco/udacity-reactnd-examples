@@ -1,33 +1,3 @@
-//Lib code (import)
-function createStore(reducer) {
-	// 1. The state
-	// 2. Get the State
-	// 3. Listen to changes
-	// 4. Update the state
-
-	let state
-	let listeners = []
-
-	const getState = () => state
-
-	const subscribe = (listener) => {
-		listeners.push(listener)
-		return () => {
-			listeners = listeners.filter((l) => l !== listener)
-		}
-	}
-
-	const dispatch = (action) => {
-		state = reducer(state, action)
-		listeners.forEach((listener) => listener())
-	}
-	return {
-		getState,
-		subscribe,
-		dispatch
-	}
-}
-
 // App code
 function generateId () {
 	return Math.random().toString(36).substring(2) + (new Date()).getTime().toString(36);
@@ -102,14 +72,46 @@ function goals (state = [], action) {
 	}
 }
 
-function app (state = {}, action) {
-	return {
-		todos: todos(state.todos, action),
-		goals: goals(state.goals, action),
-	}
+const checker = (store) => (next) => (action) => {
+	if (
+			action.type === ADD_TODO &&
+			action.todo.name.toLowerCase().includes('bitcoin')
+		 ) {
+			return alert("Bad idea :/")
+		 }
+
+	if (
+			action.type === ADD_GOAL &&
+			action.goal.name.toLowerCase().includes('bitcoin')
+		 ) {
+			return alert("Bad idea :/")
+		 }
+
+	return next(action)
 }
+
+const logger = (store) => (next) => (action) => {
+	console.group(action.type)
+		console.log('The action: ', action)
+		const result = next(action)
+		console.log('The new state: ', store.getState())
+	console.groupEnd()
+
+	return result
+}
+
 // Criando a store/observable
-const store = createStore(app)
+
+const rootReducer = Redux.combineReducers({
+	todos,
+	goals
+})
+
+const middlewares = Redux.applyMiddleware(
+	checker,
+	logger
+)
+const store = Redux.createStore(rootReducer, middlewares)
 
 store.subscribe( () => {
 	const {goals, todos} = store.getState()
@@ -184,6 +186,7 @@ function addTodoToDom(todo) {
 	document.getElementById('todo-items')
 	.appendChild(node)
 }
+
 function addGoalToDom(goal) {
 	const node =  document.createElement('li')
 	const text = document.createTextNode(goal.name)
