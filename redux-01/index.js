@@ -113,6 +113,7 @@ const middlewares = Redux.applyMiddleware(
 )
 const store = Redux.createStore(rootReducer, middlewares)
 
+/*
 store.subscribe( () => {
 	const {goals, todos} = store.getState()
 
@@ -200,3 +201,4 @@ function addGoalToDom(goal) {
 	document.getElementById('goal-items')
 	.appendChild(node)
 }
+*/

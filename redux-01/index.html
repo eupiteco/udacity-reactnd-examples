@@ -4,6 +4,9 @@
 		<meta charset="UTF-8">
 		<Title> Redux UI</Title>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/redux/3.7.2/redux.min.js"></script>
+		<script src="https://unpkg.com/react@16.3.0-alpha.1/umd/react.development.js"></script>
+		<script src="https://unpkg.com/react-dom@16.3.0-alpha.1/umd/react-dom.development.js"></script>
+		<script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
 	<style>
 		html {
 			font-family: sans-serif;
@@ -22,7 +25,7 @@
 	</style>
 	</head>
 	<body>
-		<h1>Learning redux</h1>
+		<!--h1>Learning redux</h1>
 		<div id="app">
 			<div id="todo-list" class="list">
 				<h2>Todos</h2>
@@ -39,6 +42,117 @@
 				</ul>
 			</div>
 		</div>
-		<script src="index.js"></script>
+		<hr/-->
+		<div id="react-app"></div>
+		<script type="text/javascript" src="index.js"></script>
+		<script type="text/babel">
+
+const List = ({items, removeItem, toggleItem}) => (
+				<ul>
+					{
+						items.map((item) => (
+							<li key={item.id}>
+								<span
+									onClick={() => {toggleItem && toggleItem(item.id)}}
+									style={{textDecoration: item.complete ? 'line-through' : 'none'}}
+								>{item.name}</span>
+								<button onClick={() => removeItem(item.id)}>X</button>
+							</li>
+						))
+					}
+				</ul>
+			)
+
+			class Todos extends React.Component {
+				addItem = (e) => {
+					e.preventDefault()
+					const name = this.input.value
+					this.input.value = ''
+					this.props.store.dispatch(addTodoAction({
+						name,
+						complete: false,
+						id: generateId()
+					}))
+				}
+				removeItem = (id) => {
+					this.props.store.dispatch(removeTodoAction(id))
+				}
+				toggleItem = (id) => {
+					this.props.store.dispatch(toggleTodoAction(id))
+				}
+				render() {
+					return(
+						<div>
+							<h1>TODOS</h1>
+							<input
+								type="text"
+								placeholder="Add Todo"
+								ref={(input) => this.input = input}
+							/>
+							<button onClick={this.addItem}>+</button>
+							<List
+								items={this.props.todos}
+								removeItem={this.removeItem}
+								toggleItem={this.toggleItem}
+							/>
+						</div>
+					)
+				}
+			}
+
+			class Goals extends React.Component {
+				addItem = (e) => {
+					e.preventDefault()
+					const name = this.input.value
+					this.input.value = ''
+					this.props.store.dispatch(addGoalAction({
+						name,
+						complete: false,
+						id: generateId()
+					}))
+				}
+				removeItem = (id) => {
+					this.props.store.dispatch(removeGoalAction(id))
+				}
+				render() {
+					return(
+						<div>
+							<h1>GOALS</h1>
+							<input
+								type="text"
+								placeholder="Add Goal"
+								ref={(input) => this.input = input}
+							/>
+							<button onClick={this.addItem}>+</button>
+							<List
+								items={this.props.goals}
+								removeItem={this.removeItem}
+							/>
+						</div>
+					)
+				}
+			}
+
+			class App extends React.Component {
+				componentDidMount() {
+					const { store } = this.props
+					store.subscribe(() => this.forceUpdate())
+				}
+				render() {
+					const { store } = this.props
+					const { todos, goals } = store.getState()
+					return (
+						<div>
+							<Todos todos={todos} store={this.props.store}/>
+							<Goals goals={goals} store={this.props.store}/>
+						</div>
+					)
+				}
+			}
+			ReactDOM.render(
+				<App store={store}/>,
+				document.getElementById('react-app')
+			)
+		</script>
 	</body>
 </html>
