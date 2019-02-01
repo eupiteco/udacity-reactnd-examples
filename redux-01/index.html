@@ -7,6 +7,7 @@
 		<script src="https://unpkg.com/react@16.3.0-alpha.1/umd/react.development.js"></script>
 		<script src="https://unpkg.com/react-dom@16.3.0-alpha.1/umd/react-dom.development.js"></script>
 		<script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+		<script src="https://tylermcginnis.com/goals-todos-api/index.js"></script>
 	<style>
 		html {
 			font-family: sans-serif;
@@ -47,7 +48,7 @@
 		<script type="text/javascript" src="index.js"></script>
 		<script type="text/babel">
 
-const List = ({items, removeItem, toggleItem}) => (
+			const List = ({items, removeItem, toggleItem}) => (
 				<ul>
 					{
 						items.map((item) => (
@@ -56,7 +57,7 @@ const List = ({items, removeItem, toggleItem}) => (
 									onClick={() => {toggleItem && toggleItem(item.id)}}
 									style={{textDecoration: item.complete ? 'line-through' : 'none'}}
 								>{item.name}</span>
-								<button onClick={() => removeItem(item.id)}>X</button>
+								<button onClick={() => removeItem(item)}>X</button>
 							</li>
 						))
 					}
@@ -64,22 +65,36 @@ const List = ({items, removeItem, toggleItem}) => (
 			)
 
 			class Todos extends React.Component {
+
 				addItem = (e) => {
 					e.preventDefault()
 					const name = this.input.value
-					this.input.value = ''
-					this.props.store.dispatch(addTodoAction({
-						name,
-						complete: false,
-						id: generateId()
-					}))
+					return API.saveTodo(name)
+						.then((todo) => {
+							this.props.store.dispatch(addTodoAction(todo))
+							this.input.value = ''
+						})
+						.catch(() => { alert('Someting went wrong. Try again.')})
 				}
-				removeItem = (id) => {
-					this.props.store.dispatch(removeTodoAction(id))
+
+				removeItem = (todo) => {
+					this.props.store.dispatch(removeTodoAction(todo.id))
+					return API.deleteTodo(todo.id)
+						.catch(() => {
+							this.props.store.dispatch(addTodoAction(todo))
+							alert('An error occoured. Try again.')
+						})
 				}
+
 				toggleItem = (id) => {
 					this.props.store.dispatch(toggleTodoAction(id))
+					return API.saveTodoToggle(id)
+						.catch(() => {
+							this.props.store.dispatch(toggleTodoAction(id))
+							alert('An error occoured. Try again.')
+						})
 				}
+
 				render() {
 					return(
 						<div>
@@ -101,19 +116,27 @@ const List = ({items, removeItem, toggleItem}) => (
 			}
 
 			class Goals extends React.Component {
+
 				addItem = (e) => {
 					e.preventDefault()
 					const name = this.input.value
-					this.input.value = ''
-					this.props.store.dispatch(addGoalAction({
-						name,
-						complete: false,
-						id: generateId()
-					}))
+					return API.saveTodo(name)
+						.then((goal) => {
+							this.props.store.dispatch(addGoalAction(goal))
+							this.input.value = ''
+						})
+						.catch(() => { alert('Someting went wrong. Try again.')})
 				}
-				removeItem = (id) => {
-					this.props.store.dispatch(removeGoalAction(id))
+
+				removeItem = (goal) => {
+					this.props.store.dispatch(removeGoalAction(goal.id))
+					return API.deleteGoal(goal.id)
+						.catch(() => {
+							this.props.store.dispatch(addGoalAction(goal))
+							alert('An error occoured. Try again.')
+						})
 				}
+
 				render() {
 					return(
 						<div>
@@ -136,11 +159,19 @@ const List = ({items, removeItem, toggleItem}) => (
 			class App extends React.Component {
 				componentDidMount() {
 					const { store } = this.props
+
+					Promise.all([
+						API.fetchTodos(),
+						API.fetchGoals()
+					]).then(([todos, goals]) => {
+						store.dispatch(receiveDataAction(todos, goals))
+					})
 					store.subscribe(() => this.forceUpdate())
 				}
 				render() {
 					const { store } = this.props
-					const { todos, goals } = store.getState()
+					const { todos, goals, loading } = store.getState()
+					if (loading === true) return <h3>Loading data...</h3>
 					return (
 						<div>
 							<Todos todos={todos} store={this.props.store}/>
