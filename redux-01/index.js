@@ -57,6 +57,73 @@ function receiveDataAction(todos, goals) {
 	}
 }
 
+// Thunk functions
+
+function handleInitualData() {
+	return (dispatch) => {
+		Promise.all([
+			API.fetchTodos(),
+			API.fetchGoals()
+		]).then(([todos, goals]) => {
+			store.dispatch(receiveDataAction(todos, goals))
+		})
+	}
+}
+
+function handleDeleteTodo(todo) {
+	return (dispatch) => {
+		store.dispatch(removeTodoAction(todo.id))
+		return API.deleteTodo(todo.id)
+		.catch(() => {
+			store.dispatch(addTodoAction(todo))
+			alert('An error occoured. Try again.')
+		})
+	}
+}
+
+function handleAddTodo(name, clearInput) {
+	return (dispatch) => {
+		return API.saveTodo(name)
+		.then((todo) => {
+			store.dispatch(addTodoAction(todo))
+			clearInput()
+		})
+		.catch(() => { alert('Someting went wrong. Try again.')})
+	}
+}
+
+function handleToggleTodo(id) {
+	return (dispatch) => {
+		store.dispatch(toggleTodoAction(id))
+		return API.saveTodoToggle(id)
+		.catch(() => {
+			store.dispatch(toggleTodoAction(id))
+			alert('An error occoured. Try again.')
+		})
+	}
+}
+function handleDeleteGoal(goal) {
+	return (dispatch) => {
+		store.dispatch(removeGoalAction(goal.id))
+		return API.deleteGoal(goal.id)
+		.catch(() => {
+			store.dispatch(addGoalAction(goal))
+			alert('An error occoured. Try again.')
+		})
+	}
+}
+
+function handleAddGoal(name, clearInput) {
+	return (dispatch) => {
+		return API.saveGoal(name)
+		.then((goal) => {
+			store.dispatch(addGoalAction(goal))
+			clearInput()
+		})
+		.catch(() => { alert('Someting went wrong. Try again.')})
+	}
+}
+
 // Reducers
 function todos (state = [], action) {
 	switch(action.type) {
@@ -133,6 +200,7 @@ const rootReducer = Redux.combineReducers({
 })
 
 const middlewares = Redux.applyMiddleware(
+	ReduxThunk.default,
 	checker,
 	logger
 )
