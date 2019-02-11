@@ -59,7 +59,7 @@ function receiveDataAction(todos, goals) {
 
 // Thunk functions
 
-function handleInitualData() {
+function handleInitialData() {
 	return (dispatch) => {
 		Promise.all([
 			API.fetchTodos(),
@@ -192,7 +192,6 @@ const logger = (store) => (next) => (action) => {
 }
 
 // Criando a store/observable
-
 const rootReducer = Redux.combineReducers({
 	todos,
 	goals,
