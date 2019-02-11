@@ -65,6 +65,22 @@
 				</ul>
 			)
 
+			class App extends React.Component {
+				componentDidMount() {
+					const { dispatch } = this.props
+					dispatch(handleInitialData())
+				}
+				render() {
+					if (this.props.loading === true) return <h3>Loading data...</h3>
+					return (
+						<div>
+							<ConnectedTodos />
+							<ConnectedGoals />
+						</div>
+					)
+				}
+			}
+
 			class Todos extends React.Component {
 
 				addItem = (e) => {
@@ -172,7 +188,7 @@
 						render(){
 							return (
 								<Context.Consumer>
-									{ store => <Receiver store={store} />}
+									{ (store) => <Receiver store={store} />}
 								</Context.Consumer>
 							)
 						}
@@ -181,53 +197,17 @@
 				}
 			}
 
-			class ConnectedApp extends React.Component {
-				render(){
-					return(
-						<Context.Consumer>
-						{(store) => (
-							<App store={store} />
-						)}
-						</Context.Consumer>
-					)
-				}
-			}
+			const ConnectedApp = connect((state) => ({
+				loading: state.loading
+			}))(App)
 
 			const ConnectedGoals = connect((state) => ({
 				goals: state.goals
 			}))(Goals)
 
-			class ConnectedTodos extends React.Component {
-				render(){
-					return(
-						<Context.Consumer>
-							{(store) => {
-								const { todos } = store.getState()
-								return <Todos todos={todos} dispatch={store.dispatch} />
-							}}
-						</Context.Consumer>
-					)
-				}
-			}
-
-			class App extends React.Component {
-				componentDidMount() {
-					const { store } = this.props
-					store.dispatch(handleInitialData())
-					store.subscribe(() => this.forceUpdate())
-				}
-				render() {
-					const { store } = this.props
-					const { todos, goals, loading } = store.getState()
-					if (loading === true) return <h3>Loading data...</h3>
-					return (
-						<div>
-							<ConnectedTodos />
-							<ConnectedGoals />
-						</div>
-					)
-				}
-			}
+			const ConnectedTodos = connect((state) => ({
+				todos: state.todos
+			}))(Todos)
 
 			ReactDOM.render(
 				<Provider store={store} >
