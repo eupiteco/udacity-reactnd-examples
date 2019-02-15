@@ -20,22 +20,22 @@ export function removeGoal (id) {
 }
 
 // Async action dispatchers
-import function handleDeleteGoal(goal) {
+export function handleDeleteGoal(goal) {
 	return (dispatch) => {
-		store.dispatch(removeGoal(goal.id))
+		dispatch(removeGoal(goal.id))
 		return API.deleteGoal(goal.id)
 		.catch(() => {
-			store.dispatch(addGoal(goal))
+			dispatch(addGoal(goal))
 			alert('An error occoured. Try again.')
 		})
 	}
 }
 
-import function handleAddGoal(name, clearInput) {
+export function handleAddGoal(name, clearInput) {
 	return (dispatch) => {
 		return API.saveGoal(name)
 		.then((goal) => {
-			store.dispatch(addGoal(goal))
+			dispatch(addGoal(goal))
 			clearInput()
 		})
 		.catch(() => { alert('Someting went wrong. Try again.')})

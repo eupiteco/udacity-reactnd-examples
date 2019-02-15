@@ -1,4 +1,4 @@
-import { ADD_TODO, TOGGLE_TODO, REMOVE_TODO } from "../actions"
+import { ADD_TODO, TOGGLE_TODO, REMOVE_TODO, RECEIVE_DATA } from "../actions"
 
 export default function todos (state = [], action) {
 	switch(action.type) {
