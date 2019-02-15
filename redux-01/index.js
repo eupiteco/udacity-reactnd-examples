@@ -170,14 +170,12 @@ const checker = (store) => (next) => (action) => {
 		 ) {
 			return alert("Bad idea :/")
 		 }
-
 	if (
 			action.type === ADD_GOAL &&
 			action.goal.name.toLowerCase().includes('bitcoin')
 		 ) {
 			return alert("Bad idea :/")
 		 }
-
 	return next(action)
 }
 
@@ -187,7 +185,6 @@ const logger = (store) => (next) => (action) => {
 		const result = next(action)
 		console.log('The new state: ', store.getState())
 	console.groupEnd()
-
 	return result
 }
 
