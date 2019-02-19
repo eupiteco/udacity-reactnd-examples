@@ -1,10 +1,10 @@
 import { SET_AUTHED_USER } from '../actions'
 
 export default function setAuthedUser( state = null, action ) {
-	switch action.type {
+	switch (action.type) {
 		case SET_AUTHED_USER : 
 			return action.id
-		case default :
+		default :
 			return state
 	}
 }

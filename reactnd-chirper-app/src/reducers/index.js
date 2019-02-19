@@ -1,5 +1,5 @@
 import {combineReducers} from 'redux'
-import setAuthedUser from './setAuthedUser'
+import setAuthedUser from './authedUser'
 import users from './users'
 import tweets from './tweets'
 

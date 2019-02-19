@@ -1,5 +1,5 @@
 import { getInitialData } from '../utils/api'
-import { receiveUsers, receiveUsers, setAuthedUser } from './index'
+import { receiveTweets, receiveUsers, setAuthedUser } from './index'
 
 const AUTHED_ID = 'tylermcginnis'
 
