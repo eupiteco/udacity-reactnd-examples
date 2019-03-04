@@ -1,17 +1,17 @@
 import {
   _getUsers,
-  _getTweets,
+  _getChirps,
   _saveLikeToggle,
-  _saveTweet,
+  _saveChirp,
 } from './_DATA.js'
 
 export function getInitialData () {
   return Promise.all([
     _getUsers(),
-    _getTweets(),
-  ]).then(([users, tweets]) => ({
+    _getChirps(),
+  ]).then(([users, chirps]) => ({
     users,
-    tweets,
+    chirps,
   }))
 }
 
@@ -19,6 +19,6 @@ export function saveLikeToggle (info) {
   return _saveLikeToggle(info)
 }
 
-export function saveTweet (info) {
-  return _saveTweet(info)
+export function saveChirp (info) {
+  return _saveChirp(info)
 }

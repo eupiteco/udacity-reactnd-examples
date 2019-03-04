@@ -7,11 +7,11 @@ const authedId = "tylermcginnis"
 
 export function handleInitialData () {
 	return ( dispatch ) => {
-		getInitialData()
+		return getInitialData()
 			.then(({ chirps, users }) => {
-				dispatch( receiveChirps(chirps) )
-				dispatch( receiveUsers(users) )
-				dispatch( setAuthedUser(authedId) )
+				dispatch(receiveChirps(chirps))
+				dispatch(receiveUsers(users))
+				dispatch(setAuthedUser(authedId))
 			})
 	}
 }
