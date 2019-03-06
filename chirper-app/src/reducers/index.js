@@ -8,11 +8,9 @@ export * from "./authedUser"
 export * from "./chirps"
 export * from "./users"
 
-export default combineReducers(
-	[
+export default combineReducers({
 		authedUser,
 		chirps,
 		users
-	]
-)
+	})
 
