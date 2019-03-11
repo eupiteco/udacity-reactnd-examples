@@ -5,13 +5,16 @@ import Chirp from './Chirp'
 class Dashboard extends React.Component {
 	render() {
 		return (
-			<ul>
-				{
-					this.props.chirpIds.map((id) => (
-						<li key={id}><Chirp id={id}/></li>
-					))
-				}
-			</ul>
+			<div>
+				<h1 className="center">Chirper App</h1>
+				<ul>
+					{
+						this.props.chirpIds.map((id) => (
+							<li key={id}><Chirp id={id}/></li>
+						))
+					}
+				</ul>
+			</div>
 		)
 	}
 }

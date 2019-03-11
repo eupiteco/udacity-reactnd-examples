@@ -74,7 +74,7 @@ li {
   margin: 10px;
 }
 
-.tweet {
+.chirp {
   width: 100%;
   max-width: 590px;
   padding: 10px;
@@ -85,43 +85,43 @@ li {
   cursor: pointer;
 }
 
-.tweet-info {
+.chirp-info {
   margin: 10px;
   display: flex;
   flex-direction: column;
 }
 
 /* Hacky but less typing in the video */
-.tweet-info > div > span:first-child {
+.chirp-info > div > span:first-child {
   font-weight: bold;
   margin-right: 5px;
 }
-.tweet-info > div > span:nth-child(2) {
+.chirp-info > div > span:nth-child(2) {
   color: #969696;
   font-size: 16px;
 }
-.tweet-info > div > div {
+.chirp-info > div > div {
   color: #969696;
   font-size: 15px;
 }
-.tweet-info > div > p {
+.chirp-info > div > p {
   font-size: 18px;
   margin: 10px 0;
 }
-.tweet-icons {
+.chirp-icons {
   display: flex;
   align-items: center;
 }
-.tweet-icons > span {
+.chirp-icons > span {
   color: #969696;
   margin: 0 15px 0 5px;
   font-size: 18px !important;
 }
-.tweet-icon {
+.chirp-icon {
   font-size: 27px;
   color: #697784;
 }
-.tweet-icon:hover {
+.chirp-icon:hover {
   color: #00b5d6;
   cursor: pointer;
 }
@@ -139,7 +139,7 @@ li {
   border: none;
 }
 
-.new-tweet {
+.new-chirp {
   width: 100%;
   max-width: 590px;
   margin: 0 auto;
@@ -155,7 +155,7 @@ li {
   height: 100px;
 }
 
-.tweet-length {
+.chirp-length {
   text-align: right;
   margin-top: 10px;
   font-size: 20px;
