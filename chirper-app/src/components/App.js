@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 
 import { handleInitialData } from '../actions/shared.js'
 import Dashboard from './Dashboard'
+import NewChirp from './NewChirp'
 
 class App extends Component {
 	componentDidMount() {
@@ -13,7 +14,7 @@ class App extends Component {
       <div>
 				{ this.props.loading === true
 					? <h1>Loading</h1>
-					: <Dashboard /> }
+					: <NewChirp /> }
       </div>
     )
   }
