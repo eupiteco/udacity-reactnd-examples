@@ -1,9 +1,10 @@
 import React from "react"
 import { connect } from 'react-redux'
-import { formatTweet, formatDate } from '../utils/helpers'
 import { TiArrowBackOutline } from 'react-icons/ti/index'
 import { TiHeartOutline } from 'react-icons/ti/index'
 import { TiHeartFullOutline } from 'react-icons/ti/index'
+import { formatTweet, formatDate } from '../utils/helpers'
+import { handleToggleLike } from '../actions'
 
 class Chirp extends React.Component {
 	
@@ -11,12 +12,13 @@ class Chirp extends React.Component {
 		e.preventDefault()
 	}
 
-	handleLike = (e) => {
+	handleLike = (e, data) => {
 		e.preventDefault()
+		this.props.handleToggleLike(data)
 	}
 
 	render() {
-		const { chirp } = this.props
+		const { chirp, authedUser, id } = this.props
 		if (chirp === null) return <p>This tweet does not exists</p>
 
 		const {
@@ -42,7 +44,7 @@ class Chirp extends React.Component {
 					<div>{ formatDate(timestamp) }</div>
 					<div>
 						{ parent && (
-							<button className="replying-to" onCLick={ (e) => this.toParent(e, parent.id)}>
+							<button className="replying-to" onClick={ (e) => this.toParent(e, parent.id)}>
 								Replying to @{ parent.author }
 							</button>
 						)}
@@ -51,7 +53,7 @@ class Chirp extends React.Component {
 					<div className="chirp-icons">
 						<TiArrowBackOutline className="chirp-icon" />
 						<span>{ replies !== 0 && replies }</span>
-						<button className="heart-button" onCLick={this.handleLike}>
+						<button className="heart-button" onClick={(e) => this.handleLike(e, { id, authedUser, hasLiked })}>
 							{hasLiked === true
 								? <TiHeartFullOutline color="tomato" className="chirp-icon" />
 								: <TiHeartOutline className="chirp-icon" />}
@@ -75,4 +77,10 @@ function mapStateToProps({ authedUser, chirps, users }, { id }) {
 	}
 }
 
-export default connect(mapStateToProps)(Chirp)
+function mapDispatchToProps(dispatch) {
+	return {
+		handleToggleLike: (data) => dispatch(handleToggleLike(data))
+	}
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Chirp)
