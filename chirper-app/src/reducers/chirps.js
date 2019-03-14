@@ -1,4 +1,4 @@
-import { RECEIVE_CHIRPS, TOGGLE_LIKE } from "../actions"
+import { RECEIVE_CHIRPS, TOGGLE_LIKE, ADD_CHIRP } from "../actions"
 
 export default function chirps ( state = {}, action ) {
 	switch( action.type ) {
@@ -17,6 +17,11 @@ export default function chirps ( state = {}, action ) {
 						? state[id].likes.filter((uid) => uid !== authedUser)
 						: state[id].likes.concat([authedUser])
 				}
+			}
+		case ADD_CHIRP:
+			const { text, author, replyingTo } = action
+			return {
+
 			}
 		default: return state
 	}
