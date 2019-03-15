@@ -19,9 +19,19 @@ export default function chirps ( state = {}, action ) {
 				}
 			}
 		case ADD_CHIRP:
-			const { text, author, replyingTo } = action
+			const { chirp } = action
+			let replyingTo = {}
+			if (chirp.replyingTo !== null){
+				replyingTo = {
+					[chirp.replyingTo]: {
+						...state[chirp.replyingTo],
+						replies: state[replyingTo].replies.concat([chirp.id])
+					}
+				}
+			}
 			return {
-
+				...state,
+				[action.chirp.id]: action.chirp
 			}
 		default: return state
 	}

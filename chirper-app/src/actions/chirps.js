@@ -1,4 +1,5 @@
 import { saveLikeToggle, saveChirp } from "../utils/api"
+// import { showLoading, hideLoading } from 'react-redux-loading'
 export const RECEIVE_CHIRPS = "RECEIVE_CHIRPS"
 export const TOGGLE_LIKE = "TOGGLE_LIKE"
 export const ADD_CHIRP = "ADD_CHIRP"
@@ -19,13 +20,10 @@ function toggleLike({ id, authedUser, hasLiked }) {
 	}
 }
 
-function addChirp({id, text, author, replyingTo }) {
+function addChirp(chirp) {
 	return {
 		type: ADD_CHIRP,
-		id,
-		text,
-		author,
-		replyingTo
+		chirp,
 	}
 }
 
@@ -42,17 +40,16 @@ export function handleToggleLike (data) {
 	}
 }
 
-export function handleAddChirp (data) {
-	return (dispatch) => {
-		return saveChirp(data)
-			.then((res) => {
-				const {id} = res
-				data.id = id
-				dispatch(addChirp(data))
-			})
-			.catch((e) => {
-				console.warn('Error, in handleToggleLike: ', e)
-				alert('There was a problem adding a new tweet, please try again.')
-			})
+export function handleAddChirp (text, replyingTo) {
+	return (dispatch, getState) => {
+		const { authedUser } = getState()
+		// dispatch(showLoading())
+		return saveChirp({
+			text,
+			author: authedUser,
+			replyingTo
+		})
+			.then((chirp) => dispatch(addChirp(chirp)))
+			// .then(() => dispatch(hideLoading()))
 	}
 }

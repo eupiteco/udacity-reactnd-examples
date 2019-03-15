@@ -1,4 +1,6 @@
 import React from 'react'
+import { connect } from 'react-redux'
+import { handleAddChirp } from '../actions'
 
 class NewChirp extends React.Component {
 	state = {
@@ -14,11 +16,13 @@ class NewChirp extends React.Component {
 
 	handleSubmit = (e) => {
 		e.preventDefault()
-		console.log(this.state.text)
+		const { dispatch, id } = this.props
+		const { text } = this.state
+		dispatch(handleAddChirp(text, id))
 		this.setState(() => ({
 			text: ''
 		}))
-		// TODO Add new tweet to the state
+		
 	}
 
 
@@ -26,7 +30,6 @@ class NewChirp extends React.Component {
 		const maxLength = 280
 		const { text } = this.state
 		const charsLeft = maxLength-text.length
-		console.log(charsLeft)
 		return (
 			<div>
 				<h3 className='center'>Compose new Chirp</h3>
@@ -56,4 +59,4 @@ class NewChirp extends React.Component {
 	}
 }
 
-export default NewChirp
+export default connect()(NewChirp)
