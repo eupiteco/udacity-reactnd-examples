@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { handleAddChirp } from '../actions'
+import { LoadingBar } from 'react-redux-loading'
 
 class NewChirp extends React.Component {
 	state = {
@@ -32,6 +33,7 @@ class NewChirp extends React.Component {
 		const charsLeft = maxLength-text.length
 		return (
 			<div>
+				<LoadingBar />
 				<h3 className='center'>Compose new Chirp</h3>
 				<form className='new-chirp' onSubmit={ this.handleSubmit }>
 					<textarea

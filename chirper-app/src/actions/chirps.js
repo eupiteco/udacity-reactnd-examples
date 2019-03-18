@@ -1,5 +1,5 @@
 import { saveLikeToggle, saveChirp } from "../utils/api"
-// import { showLoading, hideLoading } from 'react-redux-loading'
+import { showLoading, hideLoading } from 'react-redux-loading'
 export const RECEIVE_CHIRPS = "RECEIVE_CHIRPS"
 export const TOGGLE_LIKE = "TOGGLE_LIKE"
 export const ADD_CHIRP = "ADD_CHIRP"
@@ -42,14 +42,15 @@ export function handleToggleLike (data) {
 
 export function handleAddChirp (text, replyingTo) {
 	return (dispatch, getState) => {
+
 		const { authedUser } = getState()
-		// dispatch(showLoading())
+		dispatch(showLoading())
 		return saveChirp({
 			text,
 			author: authedUser,
 			replyingTo
 		})
 			.then((chirp) => dispatch(addChirp(chirp)))
-			// .then(() => dispatch(hideLoading()))
+			.then(() => dispatch(hideLoading()))
 	}
 }

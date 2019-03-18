@@ -25,13 +25,14 @@ export default function chirps ( state = {}, action ) {
 				replyingTo = {
 					[chirp.replyingTo]: {
 						...state[chirp.replyingTo],
-						replies: state[replyingTo].replies.concat([chirp.id])
+						replies: state[chirp.replyingTo].replies.concat([chirp.id])
 					}
 				}
 			}
 			return {
 				...state,
-				[action.chirp.id]: action.chirp
+				[action.chirp.id]: action.chirp,
+				...replyingTo,
 			}
 		default: return state
 	}
