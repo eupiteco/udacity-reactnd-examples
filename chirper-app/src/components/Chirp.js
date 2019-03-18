@@ -1,5 +1,6 @@
 import React from "react"
 import { connect } from 'react-redux'
+import { Link, withRuter } from 'react-router-dom'
 import { TiArrowBackOutline } from 'react-icons/ti/index'
 import { TiHeartOutline } from 'react-icons/ti/index'
 import { TiHeartFullOutline } from 'react-icons/ti/index'
@@ -7,10 +8,6 @@ import { formatTweet, formatDate } from '../utils/helpers'
 import { handleToggleLike } from '../actions'
 
 class Chirp extends React.Component {
-	
-	toParent = (e, id) => {
-		e.preventDefault()
-	}
 
 	handleLike = (e, data) => {
 		e.preventDefault()
@@ -18,7 +15,7 @@ class Chirp extends React.Component {
 	}
 
 	render() {
-		const { chirp, authedUser, id } = this.props
+		const { chirp, authedUser} = this.props
 		if (chirp === null) return <p>This tweet does not exists</p>
 
 		const {
@@ -29,11 +26,12 @@ class Chirp extends React.Component {
 			hasLiked,
 			likes,
 			replies,
-			parent
+			parent,
+			id
 		} = chirp
 
 		return (
-			<div className="chirp">
+			<Link to={`/chirp/${id}`} className="chirp">
 				<img
 					src={ avatar }
 					alt={ `Avatar of ${name}` }
@@ -44,9 +42,9 @@ class Chirp extends React.Component {
 					<div>{ formatDate(timestamp) }</div>
 					<div>
 						{ parent && (
-							<button className="replying-to" onClick={ (e) => this.toParent(e, parent.id)}>
+							<Link className="replying-to" to={`/chirp/${parent.id}`} >
 								Replying to @{ parent.author }
-							</button>
+							</Link>
 						)}
 						<p>{ text }</p>
 					</div>
@@ -61,7 +59,7 @@ class Chirp extends React.Component {
 						<span>{ likes !== 0 && likes }</span>
 					</div>
 				</div>
-			</div>
+			</Link>
 		)
 	}
 }

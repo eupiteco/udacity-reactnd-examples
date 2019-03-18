@@ -1,4 +1,5 @@
 import React from 'react'
+import { Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { handleAddChirp } from '../actions'
 import { LoadingBar } from 'react-redux-loading'
@@ -6,6 +7,7 @@ import { LoadingBar } from 'react-redux-loading'
 class NewChirp extends React.Component {
 	state = {
 		text: "",
+		toHome: false
 	}
 
 	handleChange = (e) => {
@@ -21,7 +23,8 @@ class NewChirp extends React.Component {
 		const { text } = this.state
 		dispatch(handleAddChirp(text, id))
 		this.setState(() => ({
-			text: ''
+			text: '',
+			toHome: true
 		}))
 		
 	}
@@ -29,8 +32,12 @@ class NewChirp extends React.Component {
 
 	render () {
 		const maxLength = 280
-		const { text } = this.state
+		const { text, toHome } = this.state
+		const { id } = this.props
 		const charsLeft = maxLength-text.length
+		if (!id && toHome === true) {
+			return <Redirect to=""/>
+		}
 		return (
 			<div>
 				<LoadingBar />
