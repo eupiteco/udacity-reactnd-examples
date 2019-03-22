@@ -15,3 +15,13 @@ export const getCategories = () =>
   fetch(`${api}/categories`, {headers})
     .then(res => res.json())
     .then(data => data);
+
+export function _getCategories() {
+  return Promise.all([
+    fetch(`${api}/categories`, {headers}),
+    fetch(`${api}/posts`, {headers}),
+  ]).then(([categories, posts]) => ({
+    categories: categories.json(),
+    posts: posts.json(),
+  }));
+}

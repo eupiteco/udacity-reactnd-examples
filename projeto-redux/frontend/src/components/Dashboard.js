@@ -1,20 +1,19 @@
-import React, {Component} from 'react';
-import './App.css';
-import {getCategories} from './utils/ReadableAPI';
+import React from 'react';
+import {getCategories, _getCategories} from '../utils/ReadableAPI';
 
-class App extends Component {
+class Dashboard extends React.Component {
   state = {
     categories: [],
+    funCat: [],
   };
-
   componentDidMount() {
     this.getApiCategories();
   }
   render() {
     const {categories} = this.state;
     return (
-      <div className="App">
-        Edit <code>src/App.js</code> and save to reload.
+      <div>
+        <h1>Dashboard</h1>
         {categories.map(cat => (
           <p key={cat.path}>{cat.name}</p>
         ))}
@@ -22,6 +21,10 @@ class App extends Component {
     );
   }
   getApiCategories = () => {
+    _getCategories().then(res => {
+      const {categories, posts} = res;
+      console.log(categories, posts);
+    });
     getCategories().then(res => {
       this.setState(() => ({
         categories: res.categories,
@@ -30,4 +33,4 @@ class App extends Component {
   };
 }
 
-export default App;
+export default Dashboard;

@@ -4,18 +4,13 @@ Um agregador de conteúdo, semelhante ao reddit ou hackernews, em que é possív
 
 # Views
 
-## Dashboard
+## Home
 	* Rota -> /
-	* Renderiza
-		- Lista com as categorias disponíveis
-		- Postagens ordenadas pela pontuação (default)
-		- Controle para alterar forma de ordenação entre pontuação e data
-		- Controle para adicionar novas postagens
+	* Renderiza Dashboard
 
 ## Categoria
 	* Rota -> /:categoria
 	* Renderiza o Dashboard filtrado pela categoria
-		- Categoria selecionada pode estar marcada no dash
 
 ## Post
 	* Rota -> /view/:postId
@@ -33,9 +28,16 @@ Um agregador de conteúdo, semelhante ao reddit ou hackernews, em que é possív
 
 # Componentes
 
-## Lista de postagens
-
-## Lista de comentários
+## Dashboard
+	* Lista com as categorias disponíveis
+	* Postagens ordenadas pela pontuação (default)
+		- Se for passada uma categoria, filtra os resultados
+	* Controle para alterar forma de ordenação entre pontuação e data
+	* Controle para adicionar novas postagens
+	* Ações
+		- GET _categories <<<<<<<
+		- GET _posts
+		- GET _comments from _posts
 
 ## Postagem
 	* Navegação para a tela do post
