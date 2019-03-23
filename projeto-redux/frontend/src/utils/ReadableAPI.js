@@ -1,3 +1,11 @@
+// Frontend data sending
+export function getInitialData() {
+  return Promise.all([_getPosts(), _getCategories()]).then(([posts, categories]) => ({
+		posts,
+		categories
+	}));
+}
+// Server data handles
 const api = 'http://localhost:3001';
 
 let token = localStorage.token;
@@ -11,17 +19,12 @@ const headers = {
   Authorization: token,
 };
 
-export const getCategories = () =>
+const _getCategories = () =>
   fetch(`${api}/categories`, {headers})
     .then(res => res.json())
-    .then(data => data);
+    .then(data => data.categories);
 
-export function _getCategories() {
-  return Promise.all([
-    fetch(`${api}/categories`, {headers}),
-    fetch(`${api}/posts`, {headers}),
-  ]).then(([categories, posts]) => ({
-    categories: categories.json(),
-    posts: posts.json(),
-  }));
-}
+const _getPosts = () =>
+  fetch(`${api}/posts`, {headers})
+    .then(res => res.json())
+    .then(posts => posts);

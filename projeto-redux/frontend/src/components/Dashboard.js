@@ -1,33 +1,28 @@
 import React from 'react';
-import {getCategories, _getCategories} from '../utils/ReadableAPI';
+import {getInitialData} from '../utils/ReadableAPI';
 
 class Dashboard extends React.Component {
   state = {
+    posts: [],
     categories: [],
-    funCat: [],
   };
   componentDidMount() {
-    this.getApiCategories();
+    this.handleInitialdata();
   }
   render() {
-    const {categories} = this.state;
+		console.log(this.state)
     return (
       <div>
         <h1>Dashboard</h1>
-        {categories.map(cat => (
-          <p key={cat.path}>{cat.name}</p>
-        ))}
       </div>
     );
   }
-  getApiCategories = () => {
-    _getCategories().then(res => {
-      const {categories, posts} = res;
-      console.log(categories, posts);
-    });
-    getCategories().then(res => {
+  handleInitialdata = () => {
+    getInitialData().then(res => {
+      const {posts, categories} = res;
       this.setState(() => ({
-        categories: res.categories,
+        posts,
+        categories,
       }));
     });
   };
