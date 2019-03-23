@@ -1,7 +1,12 @@
-export const GET_INITIAL_DATA = 'GET_INITIAL_DATA';
+import {getInitialData} from '../utils/ReadableAPI';
+import {receivePosts} from './posts.js';
+import {receiveCategories} from './categories.js';
 
-export function getInitialData() {
-  return {
-    type: GET_INITIAL_DATA,
+export function handleInitialData() {
+  return dispatch => {
+    return getInitialData().then(({posts, categories}) => {
+      dispatch(receiveCategories(categories));
+      dispatch(receivePosts(posts));
+    });
   };
 }
