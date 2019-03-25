@@ -22,9 +22,9 @@ const headers = {
 const _getCategories = () =>
   fetch(`${api}/categories`, {headers})
     .then(res => res.json())
-    .then(data => data.categories);
+    .then(data => data);
 
 const _getPosts = () =>
   fetch(`${api}/posts`, {headers})
     .then(res => res.json())
-    .then(posts => posts);
+    .then(data => data);

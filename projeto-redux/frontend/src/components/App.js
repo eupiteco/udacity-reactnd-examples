@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import '../assets/App.css';
 import {handleInitialData} from '../actions/shared';
 import Dashboard from './Dashboard'
+import PostList from './PostList'
 
 class App extends Component {
 
@@ -12,7 +13,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <Dashboard />
+        <PostList />
       </div>
     );
   }
