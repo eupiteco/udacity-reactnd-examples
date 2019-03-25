@@ -1,9 +1,11 @@
 // Frontend data sending
 export function getInitialData() {
-  return Promise.all([_getPosts(), _getCategories()]).then(([posts, categories]) => ({
-		posts,
-		categories
-	}));
+  return Promise.all([_getPosts(), _getCategories()]).then(
+    ([posts, categories]) => ({
+      posts,
+      categories,
+    }),
+  );
 }
 // Server data handles
 const api = 'http://localhost:3001';
@@ -22,7 +24,7 @@ const headers = {
 const _getCategories = () =>
   fetch(`${api}/categories`, {headers})
     .then(res => res.json())
-    .then(data => data);
+    .then(data => data.categories);
 
 const _getPosts = () =>
   fetch(`${api}/posts`, {headers})
