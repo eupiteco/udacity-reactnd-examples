@@ -5,15 +5,16 @@ class Categories extends React.Component {
   render() {
     const {categories, categoryIds} = this.props;
     return (
-      <div className="categories">
-        <h2>Categories</h2>
-        <ul>
-          {categoryIds.map(id => {
-            const c = categories[id];
-            return <li key={c.path}>{c.name}</li>;
-          })}
-        </ul>
-      </div>
+      <ul className="categories">
+        {categoryIds.map(id => {
+          const c = categories[id];
+          return (
+            <li key={c.path} ><a href={c.path} className="category-link">
+              {c.name}
+            </a></li>
+          );
+        })}
+      </ul>
     );
   }
 }

@@ -35,9 +35,8 @@ Um agregador de conteúdo, semelhante ao reddit ou hackernews, em que é possív
 	* Controle para alterar forma de ordenação entre pontuação e data
 	* Controle para adicionar novas postagens
 	* Ações
-		- GET _categories <<<<<<<
+		- GET _categories
 		- GET _posts
-		- GET _comments from _posts
 
 ## Postagem
 	* Navegação para a tela do post
@@ -52,6 +51,7 @@ Um agregador de conteúdo, semelhante ao reddit ou hackernews, em que é possív
 	* Editar/Remover
 	* Form para comentários
 	* Ações
+		- GET _comments from _posts
 		- GET _post from _posts
 			- GET _score from _post
 			- SET _score in _post
