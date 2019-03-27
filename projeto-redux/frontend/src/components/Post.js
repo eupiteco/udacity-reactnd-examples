@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {formatDate} from '../utils/helpers';
-import {upVotePost, downVotePost} from '../actions/posts';
+import {handleUpVote, handleDownVote } from '../actions/posts';
 
 class Post extends React.Component {
   render() {
@@ -33,13 +33,14 @@ class Post extends React.Component {
             <h3 className="title">{title}</h3>
             <div className="details">
               <strong className="author">{author}</strong>{' '}
-              <span className="date">{date}</span>{' '}
+              <span className="date">{date}</span>
+							<div>{category}</div>
             </div>
           </div>
           <div className="post-body">
             <p>{body}</p>
             <span className="details">
-              {commentCount} comments | {category}
+              {commentCount} comments
             </span>
           </div>
         </div>
@@ -54,8 +55,8 @@ const mapStateToProps = ({posts}, {postId}) => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  upVote: (id) => dispatch(upVotePost(id)),
-  downVote: (id) => dispatch(downVotePost(id)),
+  upVote: (id) => dispatch(handleUpVote(id)),
+  downVote: (id) => dispatch(handleDownVote(id)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Post);
