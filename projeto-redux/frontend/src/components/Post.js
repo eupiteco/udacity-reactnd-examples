@@ -1,6 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {formatDate} from '../utils/helpers';
+import {upVotePost, downVotePost} from '../actions/posts';
 
 class Post extends React.Component {
   render() {
@@ -15,16 +16,16 @@ class Post extends React.Component {
       title,
       voteScore,
     } = this.props.post;
+    const {upVote, downVote, postId} = this.props;
     const date = formatDate(timestamp);
-    console.log(date);
     return (
       <div className="post" key={id}>
         <div className="votes">
-          <button>
+          <button onClick={() => upVote(postId)}>
             <span className="up" />
           </button>
           <div className="score">{voteScore}</div>
-          <button>
+          <button onClick={() => downVote(postId)}>
             <span className="down" />
           </button>
         </div>
@@ -49,7 +50,13 @@ class Post extends React.Component {
 }
 
 const mapStateToProps = ({posts}, {postId}) => ({
+  postId,
   post: posts[postId],
 });
 
-export default connect(mapStateToProps)(Post);
+const mapDispatchToProps = dispatch => ({
+  upVote: (id) => dispatch(upVotePost(id)),
+  downVote: (id) => dispatch(downVotePost(id)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Post);
