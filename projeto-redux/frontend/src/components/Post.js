@@ -10,7 +10,6 @@ class Post extends React.Component {
       body,
       category,
       commentCount,
-      deleted,
       id,
       timestamp,
       title,
