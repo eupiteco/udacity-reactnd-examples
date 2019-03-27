@@ -1,5 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
+import {formatDate} from '../utils/helpers';
 
 class Post extends React.Component {
   render() {
@@ -14,20 +15,34 @@ class Post extends React.Component {
       title,
       voteScore,
     } = this.props.post;
+    const date = formatDate(timestamp);
+    console.log(date);
     return (
-      <div key={id}>
-        <h2>Post</h2>
-        <ul>
-          <li>{author}</li>
-          <li>{body}</li>
-          <li>{category}</li>
-          <li>{commentCount}</li>
-          <li>{deleted.toString()}</li>
-          <li>{id}</li>
-          <li>{timestamp}</li>
-          <li>{title}</li>
-          <li>{voteScore}</li>
-        </ul>
+      <div className="post" key={id}>
+        <div className="votes">
+          <button>
+            <span className="up" />
+          </button>
+          <div className="score">{voteScore}</div>
+          <button>
+            <span className="down" />
+          </button>
+        </div>
+        <div className="content">
+          <div className="post-header">
+            <h3 className="title">{title}</h3>
+            <div className="details">
+              <strong className="author">{author}</strong>{' '}
+              <span className="date">{date}</span>{' '}
+            </div>
+          </div>
+          <div className="post-body">
+            <p>{body}</p>
+            <span className="details">
+              {commentCount} comments | {category}
+            </span>
+          </div>
+        </div>
       </div>
     );
   }
