@@ -9,7 +9,7 @@ class Categories extends React.Component {
         {categoryIds.map(id => {
           const c = categories[id];
           return (
-            <li key={c.path} ><a href={c.path} className="category-link">
+            <li key={c.path} ><a href={ `/c/${c.path}` } className="category-link">
               {c.name}
             </a></li>
           );
