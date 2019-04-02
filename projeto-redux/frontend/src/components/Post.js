@@ -1,7 +1,8 @@
 import React from 'react';
 import {connect} from 'react-redux';
+import {Link} from 'react-router-dom';
 import {formatDate} from '../utils/helpers';
-import {handleUpVote, handleDownVote } from '../actions/posts';
+import {handleUpVote, handleDownVote} from '../actions/posts';
 
 class Post extends React.Component {
   render() {
@@ -18,7 +19,7 @@ class Post extends React.Component {
     const {upVote, downVote, postId} = this.props;
     const date = formatDate(timestamp);
     return (
-      <div className="post" key={id}>
+      <Link to={`/p/${id}`} className="post" key={id}>
         <div className="votes">
           <button onClick={() => upVote(postId)}>
             <span className="up" />
@@ -34,17 +35,15 @@ class Post extends React.Component {
             <div className="details">
               <strong className="author">{author}</strong>{' '}
               <span className="date">{date}</span>
-							<div>{category}</div>
+              <div>{category}</div>
             </div>
           </div>
           <div className="post-body">
             <p>{body}</p>
-            <span className="details">
-              {commentCount} comments
-            </span>
+            <span className="details">{commentCount} comments</span>
           </div>
         </div>
-      </div>
+      </Link>
     );
   }
 }
@@ -55,8 +54,11 @@ const mapStateToProps = ({posts}, {postId}) => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  upVote: (id) => dispatch(handleUpVote(id)),
-  downVote: (id) => dispatch(handleDownVote(id)),
+  upVote: id => dispatch(handleUpVote(id)),
+  downVote: id => dispatch(handleDownVote(id)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Post);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(Post);

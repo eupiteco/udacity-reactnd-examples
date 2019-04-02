@@ -4,6 +4,8 @@ import {BrowserRouter as Router, Route} from 'react-router-dom';
 import '../assets/App.css';
 import {handleInitialData} from '../actions/shared';
 import Dashboard from './Dashboard';
+import Nav from './Nav';
+import PostPage from './PostPage';
 
 class App extends Component {
   componentDidMount() {
@@ -13,8 +15,14 @@ class App extends Component {
     return (
       <Router>
         <div className="App">
-          <Route path="/" exact component={Dashboard} />
-          <Route path="/c/:category" component={Dashboard} />
+          <div className="container">
+            <div className="main-section">
+              <Route path="/" exact component={Dashboard} />
+              <Route path="/c/:category" component={Dashboard} />
+              <Route path="/p/:id" component={PostPage} />
+            </div>
+            <Nav />
+          </div>
         </div>
       </Router>
     );
