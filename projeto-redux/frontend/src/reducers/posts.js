@@ -1,4 +1,5 @@
 import {RECEIVE_POSTS, VOTE_POST} from '../actions/posts';
+import {RECEIVE_COMMENTS} from '../actions/comments';
 
 export function posts(state = {}, action) {
   switch (action.type) {
@@ -19,6 +20,18 @@ export function posts(state = {}, action) {
         [id]: {
           ...state[id],
           voteScore: newScore,
+        },
+      };
+    case RECEIVE_COMMENTS:
+      const commentsById = {};
+      action.comments.forEach(c => {
+        commentsById[c.id] = c;
+      });
+      return {
+        ...state,
+        [action.id]: {
+          ...state[action.id],
+          comments: commentsById,
         },
       };
     default:

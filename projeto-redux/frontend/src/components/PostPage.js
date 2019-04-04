@@ -1,10 +1,28 @@
 import React from 'react';
-import {withRouter} from 'react-router-dom';
+import {connect} from 'react-redux';
 import Post from './Post';
+import Comments from './Comments';
 
-const PostPage = ({match}) => {
+class PostPage extends React.Component {
+  render() {
+    const {comments, id} = this.props;
+    return (
+      <div className="post-page">
+        <Post postId={id} />
+        <Comments comments={comments} />
+      </div>
+    );
+  }
+}
+
+function mapStateToProps({posts}, {match}) {
   const {id} = match.params;
-  return <Post className="post extended" postId={id} extended />;
-};
-
-export default withRouter(PostPage);
+	console.log(id, posts)
+  return {
+    id,
+    comments: posts[id].comments.sort(
+      (a, b) => posts[b].timestamp - posts[a].timestamp,
+    ),
+  };
+}
+export default connect(mapStateToProps)(PostPage);

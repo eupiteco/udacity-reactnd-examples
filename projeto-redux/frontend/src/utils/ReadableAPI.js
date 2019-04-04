@@ -8,12 +8,16 @@ export function getInitialData() {
   );
 }
 
+export function getComments(id) {
+  return _getComments(id);
+}
+
 export function upVote(id) {
   return _upVote(id);
 }
 
 export function downVote(id) {
-	return _downVote(id);
+  return _downVote(id);
 }
 
 // Server data handles
@@ -40,16 +44,21 @@ const _getPosts = () =>
     .then(res => res.json())
     .then(data => data);
 
+const _getComments = id =>
+  fetch(`${api}/posts/${id}/comments`, {headers})
+    .then(res => res.json())
+    .then(data => data);
+
 const _upVote = id =>
   fetch(`${api}/posts/${id}`, {
     headers,
     method: 'POST',
     option: 'upVote',
-  })
+  });
 
 const _downVote = id =>
   fetch(`${api}/posts/${id}`, {
     headers,
     method: 'POST',
     option: 'downVote',
-  })
+  });

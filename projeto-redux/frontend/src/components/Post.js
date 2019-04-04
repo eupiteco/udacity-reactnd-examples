@@ -3,23 +3,35 @@ import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
 import {formatDate} from '../utils/helpers';
 import {handleUpVote, handleDownVote} from '../actions/posts';
+import {handleComments} from '../actions/comments';
+import Comments from './Comments';
 
 class Post extends React.Component {
+  componentDidMount() {
+    this.props.withComments && this.props.receiveComments(this.props.post.id);
+  }
   render() {
     const {
       author,
       body,
       category,
       commentCount,
+      comments,
       id,
       timestamp,
       title,
       voteScore,
     } = this.props.post;
-    const {upVote, downVote, postId} = this.props;
+    const {
+      withComments,
+      receiveComments,
+      upVote,
+      downVote,
+      postId,
+    } = this.props;
     const date = formatDate(timestamp);
     return (
-      <Link to={`/p/${id}`} className="post" key={id}>
+      <div className="post" key={id}>
         <div className="votes">
           <button onClick={() => upVote(postId)}>
             <span className="up" />
@@ -29,7 +41,7 @@ class Post extends React.Component {
             <span className="down" />
           </button>
         </div>
-        <div className="content">
+        <Link to={`/p/${id}`} className="content">
           <div className="post-header">
             <h3 className="title">{title}</h3>
             <div className="details">
@@ -42,8 +54,9 @@ class Post extends React.Component {
             <p>{body}</p>
             <span className="details">{commentCount} comments</span>
           </div>
-        </div>
-      </Link>
+        </Link>
+        {withComments && <Comments comments={comments} />}
+      </div>
     );
   }
 }
@@ -56,6 +69,7 @@ const mapStateToProps = ({posts}, {postId}) => ({
 const mapDispatchToProps = dispatch => ({
   upVote: id => dispatch(handleUpVote(id)),
   downVote: id => dispatch(handleDownVote(id)),
+  receiveComments: id => dispatch(handleComments(id)),
 });
 
 export default connect(

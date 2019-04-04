@@ -9,7 +9,7 @@ class PostList extends React.Component {
     return (
       <div className="posts-list">
         {postIds.map(id => (
-          <Post className="post" key={id} postId={id} />
+          <Post key={id} postId={id} />
         ))}
       </div>
     );
