@@ -1,3 +1,5 @@
+import {generateHash} from './helpers';
+
 // Frontend data sending
 export function getInitialData() {
   return Promise.all([_getPosts(), _getCategories()]).then(
@@ -20,15 +22,14 @@ export function downVote(id) {
   return _downVote(id);
 }
 
+export function newPost(data) {
+  return _newPost(data);
+}
 // Server data handles
 const api = 'http://localhost:3001';
 
 let token = localStorage.token;
-if (!token)
-  token = localStorage.token = Math.random()
-    .toString(36)
-    .substr(-8);
-
+if (!token) token = localStorage.token = generateHash();
 const headers = {
   Accept: 'application/json',
   Authorization: token,
@@ -62,3 +63,28 @@ const _downVote = id =>
     method: 'POST',
     option: 'downVote',
   });
+
+const _newPost = ({id, title, body, author, category, timestamp}) => {
+  console.log({
+    headers,
+    method: 'POST',
+    id,
+    title,
+    body,
+    author,
+    category,
+    timestamp,
+  });
+  return fetch(`${api}/posts`, {
+    headers,
+    method: 'POST',
+    id,
+    title,
+    body,
+    author,
+    category,
+    timestamp,
+  })
+    .then(res => res.json())
+    .then(data => data);
+};

@@ -7,6 +7,7 @@ import {handleInitialData} from '../actions/shared';
 import Dashboard from './Dashboard';
 import Nav from './Nav';
 import PostPage from './PostPage';
+import NewPost from './NewPost';
 
 class App extends Component {
   componentDidMount() {
@@ -25,6 +26,7 @@ class App extends Component {
                 <div className="main-section">
                   <Route path="/" exact component={Dashboard} />
                   <Route path="/c/:category" component={Dashboard} />
+                  <Route path="/new" component={NewPost} />
                   <Route path="/p/:id" component={PostPage} />
                 </div>
                 <Nav />

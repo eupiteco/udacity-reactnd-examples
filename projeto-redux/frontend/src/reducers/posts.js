@@ -1,4 +1,4 @@
-import {RECEIVE_POSTS, VOTE_POST} from '../actions/posts';
+import {ADD_POST, RECEIVE_POSTS, VOTE_POST} from '../actions/posts';
 import {RECEIVE_COMMENTS} from '../actions/comments';
 
 export function posts(state = {}, action) {
@@ -33,6 +33,12 @@ export function posts(state = {}, action) {
           ...state[action.id],
           comments: commentsById,
         },
+      };
+    case ADD_POST:
+      const {post} = action;
+      return {
+        ...state,
+        [post.id]: post,
       };
     default:
       return state;

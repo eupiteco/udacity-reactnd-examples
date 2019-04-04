@@ -29,33 +29,33 @@ Um agregador de conteúdo, semelhante ao reddit ou hackernews, em que é possív
 # Componentes
 
 ## Dashboard
-	* Lista com as categorias disponíveis
-	* Postagens ordenadas pela pontuação (default)
-		- Se for passada uma categoria, filtra os resultados
-	* Controle para alterar forma de ordenação entre pontuação e data
+	* Lista com as categorias disponíveis OK
+	* Postagens ordenadas pela pontuação (default) OK
+		- Se for passada uma categoria, filtra os resultados OK
+	* Controle para alterar forma de ordenação entre pontuação e data OK
 	* Controle para adicionar novas postagens
-	* Ações
-		- GET _categories
-		- GET _posts
+	* Ações OK
+		- GET _categories OK
+		- GET _posts OK
 
 ## Postagem
 	* Navegação para a tela do post
-	* Mostra dados do autor
-		- Username
-	* Mostra dados do post
-		- Número de comentários
-		- Título
-		- Texto
-		- Data legível
-	* Controles para votar
+	* Mostra dados do autor OK
+		- Username OK
+	* Mostra dados do post OK
+		- Número de comentários OK
+		- Título OK
+		- Texto OK
+		- Data legível OK
+	* Controles para votar OK
 	* Editar/Remover
 	* Form para comentários
 	* Ações
 		- GET _comments from _posts
-		- GET _post from _posts
-			- GET _score from _post
-			- SET _score in _post
-			- GET _comments from _post
+		- GET _post from _posts OK
+			- GET _score from _post OK
+			- SET _score in _post OK
+			- GET _comments from _post OK
 			- REM _post from posts
 		- GET _authedUser
 			- SET _canEdit from _author _from post

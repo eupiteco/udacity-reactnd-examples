@@ -1,5 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
+import {Link} from 'react-router-dom';
 import {sortPosts} from '../actions/posts';
 import Categories from './Categories';
 
@@ -7,11 +8,9 @@ class Nav extends React.Component {
   render() {
     return (
       <div className="nav">
-        <button
-          className="new-post-btn"
-          onClick={() => this.props.handleNewPost()}>
+        <Link className="new-post-btn" to="/new">
           Add Post
-        </button>
+        </Link>
         <h3>Categories</h3>
         <Categories />
         <h3> Sort posts by</h3>
