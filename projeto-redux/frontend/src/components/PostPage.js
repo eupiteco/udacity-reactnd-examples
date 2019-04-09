@@ -1,28 +1,36 @@
 import React from 'react';
 import {connect} from 'react-redux';
+import {handleSinglePost} from '../actions/singlePost';
 import Post from './Post';
-import Comments from './Comments';
+import CommentsList from './CommentsList';
 
 class PostPage extends React.Component {
+  componentDidMount() {
+    this.props.handlePostDetails(this.props.id);
+  }
+
   render() {
-    const {comments, id} = this.props;
+    const {commentsIds, id} = this.props;
     return (
       <div className="post-page">
-        <Post postId={id} />
-        <Comments comments={comments} />
+        <Post postId={id} details />
+        <CommentsList />
       </div>
     );
   }
 }
 
-function mapStateToProps({posts}, {match}) {
+const mapStateToProps = ({currentPost}, {match}) => {
   const {id} = match.params;
-	console.log(id, posts)
   return {
     id,
-    comments: posts[id].comments.sort(
-      (a, b) => posts[b].timestamp - posts[a].timestamp,
-    ),
   };
-}
-export default connect(mapStateToProps)(PostPage);
+};
+
+const mapDispatchToProps = dispatch => ({
+  handlePostDetails: id => dispatch(handleSinglePost(id)),
+});
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(PostPage);

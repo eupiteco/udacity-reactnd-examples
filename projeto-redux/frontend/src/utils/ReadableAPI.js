@@ -10,8 +10,13 @@ export function getInitialData() {
   );
 }
 
-export function getComments(id) {
-  return _getComments(id);
+export function getSinglePost(id) {
+  return Promise.all([_getDetails(id), _getComments(id)]).then(
+    ([details, comments]) => ({
+      details,
+      comments,
+    }),
+  );
 }
 
 export function upVote(id) {
@@ -65,16 +70,6 @@ const _downVote = id =>
   });
 
 const _newPost = ({id, title, body, author, category, timestamp}) => {
-  console.log({
-    headers,
-    method: 'POST',
-    id,
-    title,
-    body,
-    author,
-    category,
-    timestamp,
-  });
   return fetch(`${api}/posts`, {
     headers,
     method: 'POST',
@@ -85,6 +80,12 @@ const _newPost = ({id, title, body, author, category, timestamp}) => {
     category,
     timestamp,
   })
+    .then(res => res.json())
+    .then(data => data);
+};
+
+const _getDetails = id => {
+  return fetch(`${api}/posts/${id}`, {headers})
     .then(res => res.json())
     .then(data => data);
 };

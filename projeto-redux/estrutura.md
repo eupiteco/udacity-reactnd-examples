@@ -39,7 +39,7 @@ Um agregador de conteúdo, semelhante ao reddit ou hackernews, em que é possív
 		- GET _posts OK
 
 ## Postagem
-	* Navegação para a tela do post
+	* Navegação para a tela do post OK
 	* Mostra dados do autor OK
 		- Username OK
 	* Mostra dados do post OK
@@ -61,11 +61,11 @@ Um agregador de conteúdo, semelhante ao reddit ou hackernews, em que é possív
 			- SET _canEdit from _author _from post
 
 ## Comentário
-	* Mostra dados do autor
-		- Username
-	* Mostra dados do post
-		- Texto
-		- Data legível
+	* Mostra dados do autor OK
+		- Username OK
+	* Mostra dados do post OK
+		- Texto OK
+		- Data legível OK
 	* Controles para votar
 	* Editar/Remover
 	* Ações
@@ -91,10 +91,10 @@ Um agregador de conteúdo, semelhante ao reddit ou hackernews, em que é possív
 		- POST _obj in _objList
 
 ## Controles de voto
-	* Mostra pontuação
-	* Ações
-		- GET _score from _post
-		- SET _score in _post
+	* Mostra pontuação OK
+	* Ações OK
+		- GET _score from _post OK
+		- SET _score in _post OK
 
 --------------------------------------------------
 

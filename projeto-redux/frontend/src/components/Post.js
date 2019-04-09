@@ -3,13 +3,9 @@ import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
 import {formatDate} from '../utils/helpers';
 import {handleUpVote, handleDownVote} from '../actions/posts';
-import {handleComments} from '../actions/comments';
 import Comments from './Comments';
 
 class Post extends React.Component {
-  componentDidMount() {
-    this.props.withComments && this.props.receiveComments(this.props.post.id);
-  }
   render() {
     const {
       author,
@@ -24,7 +20,6 @@ class Post extends React.Component {
     } = this.props.post;
     const {
       withComments,
-      receiveComments,
       upVote,
       downVote,
       postId,
@@ -61,15 +56,14 @@ class Post extends React.Component {
   }
 }
 
-const mapStateToProps = ({posts}, {postId}) => ({
+const mapStateToProps = ({posts, currentPost}, {postId, details}) => ({
   postId,
-  post: posts[postId],
+  post: details ? currentPost : posts[postId],
 });
 
 const mapDispatchToProps = dispatch => ({
   upVote: id => dispatch(handleUpVote(id)),
   downVote: id => dispatch(handleDownVote(id)),
-  receiveComments: id => dispatch(handleComments(id)),
 });
 
 export default connect(

@@ -1,4 +1,4 @@
-import {upVote, downVote, newPost} from '../utils/ReadableAPI';
+import {upVote, downVote, newPost } from '../utils/ReadableAPI';
 
 export const RECEIVE_POSTS = 'RECEIVE_POSTS';
 export const ADD_POST = 'ADD_POST';
@@ -21,8 +21,8 @@ export function sortPosts(sortBy) {
 
 export function handleNewPost(post) {
   return dispatch => {
-    return newPost(post).then((data) => {
-			console.log(data)
+    return newPost(post).then(data => {
+      console.log(data);
       dispatch(addPost(post));
     });
   };

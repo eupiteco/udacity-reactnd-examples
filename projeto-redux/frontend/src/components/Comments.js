@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Comments = ({comments}) => (
+const CommentsList = ({comments}) => (
   <div className="comment-list">
     {comments.map(c => {
       const {author, body, voteScore, timeStamp} = c;
@@ -16,4 +16,4 @@ const Comments = ({comments}) => (
   </div>
 );
 
-export default Comments;
+export default CommentsList;
