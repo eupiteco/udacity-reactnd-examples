@@ -1,5 +1,4 @@
 import {ADD_POST, RECEIVE_POSTS, VOTE_POST} from '../actions/posts';
-//import {RECEIVE_COMMENTS} from '../actions/comments';
 
 export function posts(state = {}, action) {
   switch (action.type) {

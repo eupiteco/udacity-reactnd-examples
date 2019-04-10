@@ -39,7 +39,6 @@ class App extends Component {
 
 function mapStateToProps({flags}) {
   const {authedUser} = flags;
-  console.log(authedUser);
   return {
     loading: authedUser === null,
   };

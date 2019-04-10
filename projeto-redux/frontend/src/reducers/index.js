@@ -3,12 +3,12 @@ import {loadingBarReducer} from 'react-redux-loading';
 import * as categories from './categories';
 import * as posts from './posts';
 import * as flags from './flags';
-import * as singlePost from './singlePost';
+import * as comments from './comments';
 
 export default combineReducers({
   ...categories,
-  ...posts,
+	...comments,
   ...flags,
-  ...singlePost,
+  ...posts,
   loadingBar: loadingBarReducer,
 });

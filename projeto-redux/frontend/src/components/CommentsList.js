@@ -15,8 +15,7 @@ class CommentsList extends React.Component {
   }
 }
 
-const mapStateToProps = ({currentPost}) => {
-  const {comments} = currentPost;
+const mapStateToProps = ({comments}) => {
   const commentsIds = comments
     ? Object.keys(comments).sort(
         (a, b) => comments[b].timestamp - comments[a].timestamp,

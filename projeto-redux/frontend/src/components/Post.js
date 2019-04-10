@@ -12,13 +12,12 @@ class Post extends React.Component {
       body,
       category,
       commentCount,
-      comments,
       id,
       timestamp,
       title,
       voteScore,
     } = this.props.post;
-    const {upVote, downVote, postId} = this.props;
+    const {upVote, downVote} = this.props;
     const date = formatDate(timestamp);
     return (
       <div className="post" key={id}>
@@ -48,7 +47,6 @@ class Post extends React.Component {
 }
 
 const mapStateToProps = ({posts, currentPost}, {postId, details}) => {
-  console.log(postId);
   return {
     postId,
     post: posts !== {} ? posts[postId] : {},

@@ -1,15 +1,18 @@
 import {
   upVoteComment as upVote,
   downVoteComment as downVote,
+  getComments,
 } from '../utils/ReadableAPI';
 
 export const VOTE_COMMENT = 'VOTE_COMMENT';
 export const RECEIVE_COMMENTS = 'RECEIVE_COMMENTS';
 
 export function handleComments(id) {
-	return dispatch => {
-		return 
-	}
+  return dispatch => {
+    return getComments(id).then(comments => {
+      dispatch(receiveComments(comments));
+    });
+  };
 }
 export function handleUpVote(id) {
   return dispatch => {
@@ -33,10 +36,16 @@ export function handleDownVote(id) {
   };
 }
 
+function receiveComments(comments) {
+  return {
+    type: RECEIVE_COMMENTS,
+    comments,
+  };
+}
 
 function upVoteComment(id) {
   return {
-    type: VOTE_POST,
+    type: VOTE_COMMENT,
     data: {
       id,
       vote: 1,
@@ -46,7 +55,7 @@ function upVoteComment(id) {
 
 function downVoteComment(id) {
   return {
-    type: VOTE_POST,
+    type: VOTE_COMMENT,
     data: {
       id,
       vote: -1,
