@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
 import {formatDate} from '../utils/helpers';
 import {handleUpVote, handleDownVote} from '../actions/posts';
-import Comments from './Comments';
+import VoteControls from './VoteControls';
 
 class Post extends React.Component {
   render() {
@@ -18,24 +18,16 @@ class Post extends React.Component {
       title,
       voteScore,
     } = this.props.post;
-    const {
-      withComments,
-      upVote,
-      downVote,
-      postId,
-    } = this.props;
+    const {upVote, downVote, postId} = this.props;
     const date = formatDate(timestamp);
     return (
       <div className="post" key={id}>
-        <div className="votes">
-          <button onClick={() => upVote(postId)}>
-            <span className="up" />
-          </button>
-          <div className="score">{voteScore}</div>
-          <button onClick={() => downVote(postId)}>
-            <span className="down" />
-          </button>
-        </div>
+        <VoteControls
+          postId={id}
+          upVote={upVote}
+          downVote={downVote}
+          voteScore={voteScore}
+        />
         <Link to={`/p/${id}`} className="content">
           <div className="post-header">
             <h3 className="title">{title}</h3>
@@ -50,16 +42,18 @@ class Post extends React.Component {
             <span className="details">{commentCount} comments</span>
           </div>
         </Link>
-        {withComments && <Comments comments={comments} />}
       </div>
     );
   }
 }
 
-const mapStateToProps = ({posts, currentPost}, {postId, details}) => ({
-  postId,
-  post: details ? currentPost : posts[postId],
-});
+const mapStateToProps = ({posts, currentPost}, {postId, details}) => {
+  console.log(postId);
+  return {
+    postId,
+    post: posts !== {} ? posts[postId] : {},
+  };
+};
 
 const mapDispatchToProps = dispatch => ({
   upVote: id => dispatch(handleUpVote(id)),

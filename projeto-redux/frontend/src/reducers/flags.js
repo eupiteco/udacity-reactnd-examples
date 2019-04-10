@@ -1,7 +1,7 @@
 import {SORT_POSTS} from '../actions/posts';
 import {SET_AUTHED_USER} from '../actions/shared';
 
-export function flags(state = {sortBy: 'score'}, action) {
+export function flags(state = {sortBy: 'score', authedUser: null}, action) {
   switch (action.type) {
     case SORT_POSTS:
       const {sortBy} = action;

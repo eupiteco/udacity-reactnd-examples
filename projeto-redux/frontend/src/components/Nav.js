@@ -8,6 +8,7 @@ class Nav extends React.Component {
   render() {
     return (
       <div className="nav">
+				<Link to="/"><h2>Home</h2></Link>
         <Link className="new-post-btn" to="/new">
           Add Post
         </Link>

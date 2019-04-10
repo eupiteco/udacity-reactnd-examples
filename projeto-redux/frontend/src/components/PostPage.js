@@ -14,7 +14,7 @@ class PostPage extends React.Component {
     return (
       <div className="post-page">
         <Post postId={id} details />
-        <CommentsList />
+        <CommentsList id={id} />
       </div>
     );
   }

@@ -16,22 +16,20 @@ class App extends Component {
   render() {
     return (
       <Router>
-        <LoadingBar />
         <div className="App">
+          <LoadingBar />
           <div className="container">
             {this.props.loading === true ? (
               <h1>Loading ...</h1>
             ) : (
-              <React.Fragment>
-                <div className="main-section">
-                  <Route path="/" exact component={Dashboard} />
-                  <Route path="/c/:category" component={Dashboard} />
-                  <Route path="/new" component={NewPost} />
-                  <Route path="/p/:id" component={PostPage} />
-                </div>
-                <Nav />
-              </React.Fragment>
+              <div className="main-section">
+                <Route path="/" exact component={Dashboard} />
+                <Route path="/c/:category" component={Dashboard} />
+                <Route path="/new" component={NewPost} />
+                <Route path="/p/:id" component={PostPage} />
+              </div>
             )}
+            <Nav />
           </div>
         </div>
       </Router>
@@ -39,9 +37,11 @@ class App extends Component {
   }
 }
 
-function mapStateToProps({loadingBar}) {
+function mapStateToProps({flags}) {
+  const {authedUser} = flags;
+  console.log(authedUser);
   return {
-    loading: loadingBar.default === 1,
+    loading: authedUser === null,
   };
 }
 export default connect(mapStateToProps)(App);

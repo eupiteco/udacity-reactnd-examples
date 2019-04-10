@@ -48,6 +48,54 @@ ul {
 .nav {
   margin-lieft: 20px;
 }
+.comment {
+  background-color: #fafafa;
+  display: flex;
+  align-items: center;
+  padding: 10px;
+}
+
+.comment:not(:last-child) {
+  margin-bottom: 5px;
+}
+
+.comment .details {
+  color: #555;
+  font-size: 13.3333px;
+}
+
+.comment-content p {
+  margin-top: 5px;
+}
+
+.comment .votes {
+  display: flex;
+  flex-direction: column;
+  font-size: 16px;
+  font-weight: 500;
+  margin-right: 20px;
+  text-align: center;
+}
+
+.comment .votes button span {
+  border-left: 7px solid transparent;
+  border-right: 7px solid transparent;
+  display: block;
+  height: 0;
+  width: 0;
+}
+
+.comment .votes button .up {
+  border-bottom: 7px solid #393;
+}
+
+.comment .votes button .down {
+  border-top: 7px solid #393;
+}
+
+.comment .votes .score {
+  margin: 5px;
+}
 
 .post {
   background-color: #fafafa;
@@ -58,6 +106,7 @@ ul {
   transition: box-shadow 0.3s ease-out;
   width: 600px;
 }
+
 .post:hover {
   box-shadow: 0 1px 4px 2px rgba(200, 200, 200, 0.4);
 }
@@ -70,6 +119,7 @@ ul {
   color: #555;
   font-size: 13.3333px;
 }
+
 .post .title {
   margin-bottom: 5px;
 }
@@ -83,8 +133,8 @@ ul {
   text-align: center;
 }
 
-.post >*:not(.link) {
-	color: #333;
+.post > *:not(.link) {
+  color: #333;
 }
 
 .post .votes button span {
