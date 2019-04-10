@@ -19,12 +19,24 @@ export function getSinglePost(id) {
   );
 }
 
-export function upVote(id) {
-  return _upVote(id);
+export function getComments(id) {
+  return _getComments(id);
 }
 
-export function downVote(id) {
-  return _downVote(id);
+export function upVoteComment(id) {
+  return _upVoteComment(id);
+}
+
+export function downVoteComment(id) {
+  return _downVoteComment(id);
+}
+
+export function upVotePost(id) {
+  return _upVotePost(id);
+}
+
+export function downVotePost(id) {
+  return _downVotePost(id);
 }
 
 export function newPost(data) {
@@ -55,15 +67,29 @@ const _getComments = id =>
     .then(res => res.json())
     .then(data => data);
 
-const _upVote = id =>
+const _upVotePost = id =>
   fetch(`${api}/posts/${id}`, {
     headers,
     method: 'POST',
     option: 'upVote',
   });
 
-const _downVote = id =>
+const _downVotePost = id =>
   fetch(`${api}/posts/${id}`, {
+    headers,
+    method: 'POST',
+    option: 'downVote',
+  });
+
+const _upVoteComment = id =>
+  fetch(`${api}/comments/${id}`, {
+    headers,
+    method: 'POST',
+    option: 'upVote',
+  });
+
+const _downVoteComment = id =>
+  fetch(`${api}/comments/${id}`, {
     headers,
     method: 'POST',
     option: 'downVote',

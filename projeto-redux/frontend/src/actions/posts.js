@@ -1,4 +1,8 @@
-import {upVote, downVote, newPost } from '../utils/ReadableAPI';
+import {
+  upVotePost as upVote,
+  downVotePost as downVote,
+  newPost,
+} from '../utils/ReadableAPI';
 
 export const RECEIVE_POSTS = 'RECEIVE_POSTS';
 export const ADD_POST = 'ADD_POST';

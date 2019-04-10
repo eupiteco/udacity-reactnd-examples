@@ -1,5 +1,5 @@
 import {ADD_POST, RECEIVE_POSTS, VOTE_POST} from '../actions/posts';
-import {RECEIVE_COMMENTS} from '../actions/comments';
+//import {RECEIVE_COMMENTS} from '../actions/comments';
 
 export function posts(state = {}, action) {
   switch (action.type) {
@@ -22,6 +22,7 @@ export function posts(state = {}, action) {
           voteScore: newScore,
         },
       };
+			/*
     case RECEIVE_COMMENTS:
       const commentsById = {};
       action.comments.forEach(c => {
@@ -34,6 +35,7 @@ export function posts(state = {}, action) {
           comments: commentsById,
         },
       };
+			*/
     case ADD_POST:
       const {post} = action;
       return {
