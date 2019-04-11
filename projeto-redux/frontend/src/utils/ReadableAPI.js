@@ -49,6 +49,7 @@ let token = localStorage.token;
 if (!token) token = localStorage.token = generateHash();
 const headers = {
   Accept: 'application/json',
+  'Content-Type': 'application/json',
   Authorization: token,
 };
 
