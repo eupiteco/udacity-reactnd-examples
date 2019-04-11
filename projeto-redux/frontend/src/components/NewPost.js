@@ -15,33 +15,50 @@ class NewPost extends React.Component {
   render() {
     const {title, body, toHome} = this.state;
     const {categories, categoryIds} = this.props;
-    if (toHome === true) return <Redirect to="" />;
+    if (toHome === true) return <Redirect to="/" />;
     return (
       <div>
+				<h1 className="center">New Post</h1>
         <form className="new-post" onSubmit={this.handleSubmit}>
-          <input
-            type="text"
-            placeholder="Post title"
-            value={title}
-            onChange={this.handleTitle}
-            className="title-input"
-          />
-          <textarea
-            placeholder="Content"
-            value={body}
-            onChange={this.handleContent}
-            className="body-input"
-          />
-          <select className="category-picker" onChange={this.handleCategory}>
-            <option key="none" />
-            {categoryIds.map(id => {
-              const c = categories[id];
-              return <option key={c.path}>{c.name}</option>;
-            })}
-          </select>
-          <button className="btn" type="submit" disabled={!this.isValid()}>
-            Submit
-          </button>
+          <div className="inputs">
+            <input
+              type="text"
+              placeholder="Post title"
+              value={title}
+              onChange={this.handleTitle}
+              className="title-input"
+            />
+            <textarea
+              placeholder="Post content"
+              value={body}
+              onChange={this.handleContent}
+              className="body-input"
+            />
+          </div>
+          <div className="controls">
+            <select className="category-picker" onChange={this.handleCategory}>
+              <option key="none" className="placeholder">
+                Choose a category
+              </option>
+              {categoryIds.map(id => {
+                const c = categories[id];
+                return <option key={c.path}>{c.name}</option>;
+              })}
+            </select>
+            <div className="buttons">
+              <button
+                className="btn btn-cancel"
+								onClick={ () => this.setState({ toHome: true }) }>
+                Cancel
+              </button>
+              <button
+                className="btn btn-submit"
+                type="submit"
+                disabled={!this.isValid()}>
+                Submit
+              </button>
+            </div>
+          </div>
         </form>
       </div>
     );
@@ -62,6 +79,7 @@ class NewPost extends React.Component {
       timestamp,
     };
     this.props.handleNewPost(newPost);
+
     this.setState(() => ({
       title: '',
       body: '',
@@ -75,6 +93,7 @@ class NewPost extends React.Component {
     if (title === '' || body === '' || category === '') return false;
     return true;
   };
+
   handleTitle = e => {
     const title = e.target.value;
     this.setState(() => ({

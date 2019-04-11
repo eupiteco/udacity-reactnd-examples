@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import {handleComments} from '../actions/comments';
 import Post from './Post';
 import CommentsList from './CommentsList';
+import NewComment from './NewComment';
 
 class PostPage extends React.Component {
   componentDidMount() {
@@ -14,6 +15,7 @@ class PostPage extends React.Component {
       <div className="post-page">
         <Post postId={id} details />
         <CommentsList id={id} />
+				<NewComment />
       </div>
     );
   }

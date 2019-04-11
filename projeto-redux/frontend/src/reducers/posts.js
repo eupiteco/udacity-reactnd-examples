@@ -21,20 +21,6 @@ export function posts(state = {}, action) {
           voteScore: newScore,
         },
       };
-			/*
-    case RECEIVE_COMMENTS:
-      const commentsById = {};
-      action.comments.forEach(c => {
-        commentsById[c.id] = c;
-      });
-      return {
-        ...state,
-        [action.id]: {
-          ...state[action.id],
-          comments: commentsById,
-        },
-      };
-			*/
     case ADD_POST:
       const {post} = action;
       return {

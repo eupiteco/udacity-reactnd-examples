@@ -143,3 +143,5 @@ Um agregador de conteúdo, semelhante ao reddit ou hackernews, em que é possív
 # Fixes
 	* Click pra upvote não pode abrir o post
 	* Estilo do post pra saber o que acessa a página e o que não
+	* Ordenação de posts tá estranha
+	* Largura dos posts !== novo post

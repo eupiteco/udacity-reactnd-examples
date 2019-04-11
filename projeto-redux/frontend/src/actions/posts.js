@@ -27,7 +27,7 @@ export function handleNewPost(post) {
   return dispatch => {
     return newPost(post).then(data => {
       console.log(data);
-      dispatch(addPost(post));
+      dispatch(addPost(data));
     });
   };
 }

@@ -24,19 +24,19 @@ export function getComments(id) {
 }
 
 export function upVoteComment(id) {
-  return _upVoteComment(id);
+  return _voteComment(id, {option: 'upVote'});
 }
 
 export function downVoteComment(id) {
-  return _downVoteComment(id);
+  return _voteComment(id, {option: 'downVote'});
 }
 
 export function upVotePost(id) {
-  return _upVotePost(id);
+  return _votePost(id, {option: 'upVote'});
 }
 
 export function downVotePost(id) {
-  return _downVotePost(id);
+  return _votePost(id, {option: 'downVote'});
 }
 
 export function newPost(data) {
@@ -68,44 +68,25 @@ const _getComments = id =>
     .then(res => res.json())
     .then(data => data);
 
-const _upVotePost = id =>
-  fetch(`${api}/posts/${id}`, {
-    headers,
-    method: 'POST',
-    option: 'upVote',
-  });
-
-const _downVotePost = id =>
-  fetch(`${api}/posts/${id}`, {
-    headers,
-    method: 'POST',
-    option: 'downVote',
-  });
-
-const _upVoteComment = id =>
+const _voteComment = (id, vote) =>
   fetch(`${api}/comments/${id}`, {
     headers,
     method: 'POST',
-    option: 'upVote',
+    body: JSON.stringify(vote),
   });
 
-const _downVoteComment = id =>
-  fetch(`${api}/comments/${id}`, {
+const _votePost = (id, vote) =>
+  fetch(`${api}/posts/${id}`, {
     headers,
     method: 'POST',
-    option: 'downVote',
+    body: JSON.stringify(vote),
   });
 
-const _newPost = ({id, title, body, author, category, timestamp}) => {
+const _newPost = (newPostData) => {
   return fetch(`${api}/posts`, {
     headers,
     method: 'POST',
-    id,
-    title,
-    body,
-    author,
-    category,
-    timestamp,
+		body: JSON.stringify(newPostData)
   })
     .then(res => res.json())
     .then(data => data);
