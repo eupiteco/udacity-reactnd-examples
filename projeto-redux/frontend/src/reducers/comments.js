@@ -1,4 +1,9 @@
-import {RECEIVE_COMMENTS, VOTE_COMMENT, ADD_COMMENT} from '../actions/comments';
+import {
+  RECEIVE_COMMENTS,
+  VOTE_COMMENT,
+  ADD_COMMENT,
+  REMOVE_COMMENT,
+} from '../actions/comments';
 
 export function comments(state = {}, action) {
   switch (action.type) {
@@ -26,6 +31,12 @@ export function comments(state = {}, action) {
       return {
         ...state,
         [comment.id]: comment,
+      };
+    case REMOVE_COMMENT:
+      const {removedComment} = action;
+      return {
+        ...state,
+        [removedComment.id]: removedComment,
       };
     default:
       return state;

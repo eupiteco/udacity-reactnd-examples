@@ -35,6 +35,10 @@ export function downVoteComment(id) {
   return _voteComment(id, {option: 'downVote'});
 }
 
+export function removeComment(id) {
+  return _removeComment(id);
+}
+
 export function upVotePost(id) {
   return _votePost(id, {option: 'upVote'});
 }
@@ -62,11 +66,6 @@ const _getCategories = () =>
     .then(res => res.json())
     .then(data => data.categories);
 
-const _getPosts = () =>
-  fetch(`${api}/posts`, {headers})
-    .then(res => res.json())
-    .then(data => data);
-
 const _getComments = id =>
   fetch(`${api}/posts/${id}/comments`, {headers})
     .then(res => res.json())
@@ -89,12 +88,23 @@ const _newComment = newCommentData => {
     .then(data => data);
 };
 
+const _removeComment = id => {
+  return fetch(`${api}/comments/${id}`, {headers, method: 'DELETE'})
+    .then(res => res.json())
+    .then(data => data);
+};
+
 const _votePost = (id, vote) =>
   fetch(`${api}/posts/${id}`, {
     headers,
     method: 'POST',
     body: JSON.stringify(vote),
   });
+
+const _getPosts = () =>
+  fetch(`${api}/posts`, {headers})
+    .then(res => res.json())
+    .then(data => data);
 
 const _newPost = newPostData => {
   return fetch(`${api}/posts`, {

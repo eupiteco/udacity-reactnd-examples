@@ -17,9 +17,9 @@ class CommentsList extends React.Component {
 
 const mapStateToProps = ({comments}) => {
   const commentsIds = comments
-    ? Object.keys(comments).sort(
-        (a, b) => comments[b].timestamp - comments[a].timestamp,
-      )
+    ? Object.keys(comments)
+        .sort((a, b) => comments[b].timestamp - comments[a].timestamp)
+        .filter(id => comments[id].deleted === false)
     : [];
   return {
     commentsIds,

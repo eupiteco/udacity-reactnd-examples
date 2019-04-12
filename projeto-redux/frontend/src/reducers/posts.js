@@ -1,4 +1,5 @@
 import {ADD_POST, RECEIVE_POSTS, VOTE_POST} from '../actions/posts';
+import {ADD_COMMENT, REMOVE_COMMENT} from '../actions/comments';
 
 export function posts(state = {}, action) {
   switch (action.type) {
@@ -26,6 +27,24 @@ export function posts(state = {}, action) {
       return {
         ...state,
         [post.id]: post,
+      };
+    case ADD_COMMENT:
+      const {parentId} = action.comment;
+      return {
+        ...state,
+        [parentId]: {
+          ...state[parentId],
+          commentCount: state[parentId].commentCount + 1,
+        },
+      };
+    case REMOVE_COMMENT:
+      const removedId = action.removedComment.parentId;
+      return {
+        ...state,
+        [removedId]: {
+          ...state[removedId],
+          commentCount: state[removedId].commentCount - 1,
+        },
       };
     default:
       return state;

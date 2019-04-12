@@ -22,7 +22,7 @@ class Post extends React.Component {
     return (
       <div className="post" key={id}>
         <VoteControls
-          postId={id}
+          id={id}
           upVote={upVote}
           downVote={downVote}
           voteScore={voteScore}

@@ -1,8 +1,13 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {formatDate} from '../utils/helpers';
-import {handleUpVote, handleDownVote} from '../actions/comments';
+import {
+  handleUpVote,
+  handleDownVote,
+  handleRemoveComment,
+} from '../actions/comments';
 import VoteControls from './VoteControls';
+import {Edit as EditIcon, Trash2 as RemoveIcon} from 'react-feather';
 
 class Comment extends React.Component {
   render() {
@@ -12,12 +17,20 @@ class Comment extends React.Component {
     return (
       <div className="comment">
         <VoteControls
-          postId={id}
+          id={id}
           upVote={upVote}
           downVote={downVote}
           voteScore={voteScore}
         />
         <div className="comment-content">
+          <div className="rem-ed-buttons">
+            <button className="icon-btn">
+              <EditIcon size={18} />
+            </button>
+            <button className="icon-btn" onClick={() => this.props.remove(id)}>
+              <RemoveIcon size={18} />
+            </button>
+          </div>
           <div className="details">
             <strong className="author">{author}</strong>{' '}
             <span className="date">{date}</span>
@@ -37,6 +50,7 @@ const mapStateToProps = ({comments}, {id}) => {
 };
 
 const mapDispatchToProps = dispatch => ({
+  remove: id => dispatch(handleRemoveComment(id)),
   upVote: id => dispatch(handleUpVote(id)),
   downVote: id => dispatch(handleDownVote(id)),
 });

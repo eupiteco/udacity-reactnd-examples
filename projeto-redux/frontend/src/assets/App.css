@@ -12,6 +12,10 @@ button, .btn {
 	padding: 10px 30px;
 }
 
+.icon-btn {
+	padding: 5px 0;
+	height: .5rem;
+}
 
 li {
   list-style: none;
@@ -78,6 +82,7 @@ select {
   display: flex;
   align-items: center;
   padding: 10px;
+	position: relative;
 }
 
 .comment:not(:last-child) {
@@ -156,6 +161,13 @@ select {
 .buttons {
 	float: right;
 }
+
+.rem-ed-buttons {
+	position: absolute;
+	top: 10px;
+	right: 10px;
+}
+
 .post {
   background-color: #fafafa;
   display: flex;
