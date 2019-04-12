@@ -33,7 +33,7 @@ Um agregador de conteúdo, semelhante ao reddit ou hackernews, em que é possív
 	* Postagens ordenadas pela pontuação (default) OK
 		- Se for passada uma categoria, filtra os resultados OK
 	* Controle para alterar forma de ordenação entre pontuação e data OK
-	* Controle para adicionar novas postagens
+	* Controle para adicionar novas postagens OK
 	* Ações OK
 		- GET _categories OK
 		- GET _posts OK
@@ -48,16 +48,17 @@ Um agregador de conteúdo, semelhante ao reddit ou hackernews, em que é possív
 		- Texto OK
 		- Data legível OK
 	* Controles para votar OK
-	* Editar/Remover
-	* Form para comentários
-	* Ações
-		- GET _comments from _posts
+	* Editar
+	* Remover
+	* Form para comentários OK
+	* Ações OK
+		- GET _comments from _posts OK
 		- GET _post from _posts OK
 			- GET _score from _post OK
 			- SET _score in _post OK
 			- GET _comments from _post OK
-			- REM _post from posts
-		- GET _authedUser
+			- REM _post from posts OK
+		- GET _authedUser OK
 			- SET _canEdit from _author _from post
 
 ## Comentário
@@ -66,29 +67,30 @@ Um agregador de conteúdo, semelhante ao reddit ou hackernews, em que é possív
 	* Mostra dados do post OK
 		- Texto OK
 		- Data legível OK
-	* Controles para votar
-	* Editar/Remover
+	* Controles para votar OK
+	* Editar
+	* Remover
 	* Ações
-		- GET _comment from _comment
-			- GET _score from _comment
+		- GET _comment from _comment OK
+			- GET _score from _comment OK
 			- SET _score from _comment
 			- REM _comment from comments
-		- GET _authedUser
+		- GET _authedUser OK
 			- SET _canEdit from _author _from comment
 
 ## Forms
-	* Precisam ter o usuário logado
-	* Enviam objetos para o servidor
+	* Precisam ter o usuário logado OK
+	* Enviam objetos para o servidor OK
 	* Se receberem um `id`, populam os campos
-	* Post
-		- Título
-		- Texto
-		- Categoria
-	* Comentário
-		- Texto
+	* Post OK
+		- Título OK
+		- Texto OK
+		- Categoria OK
+	* Comentário OK
+		- Texto OK
 	* Ações
 		- GET _obj from _objList
-		- POST _obj in _objList
+		- POST _obj in _objList OK
 
 ## Controles de voto
 	* Mostra pontuação OK

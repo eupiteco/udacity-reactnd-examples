@@ -1,4 +1,4 @@
-import {RECEIVE_COMMENTS, VOTE_COMMENT} from '../actions/comments';
+import {RECEIVE_COMMENTS, VOTE_COMMENT, ADD_COMMENT} from '../actions/comments';
 
 export function comments(state = {}, action) {
   switch (action.type) {
@@ -20,6 +20,12 @@ export function comments(state = {}, action) {
           ...state[id],
           voteScore: newScore,
         },
+      };
+    case ADD_COMMENT:
+      const {comment} = action;
+      return {
+        ...state,
+        [comment.id]: comment,
       };
     default:
       return state;

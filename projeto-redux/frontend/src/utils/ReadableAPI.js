@@ -23,6 +23,10 @@ export function getComments(id) {
   return _getComments(id);
 }
 
+export function newComment(data) {
+  return _newComment(data);
+}
+
 export function upVoteComment(id) {
   return _voteComment(id, {option: 'upVote'});
 }
@@ -75,6 +79,16 @@ const _voteComment = (id, vote) =>
     body: JSON.stringify(vote),
   });
 
+const _newComment = newCommentData => {
+  return fetch(`${api}/comments`, {
+    headers,
+    method: 'POST',
+    body: JSON.stringify(newCommentData),
+  })
+    .then(res => res.json())
+    .then(data => data);
+};
+
 const _votePost = (id, vote) =>
   fetch(`${api}/posts/${id}`, {
     headers,
@@ -82,11 +96,11 @@ const _votePost = (id, vote) =>
     body: JSON.stringify(vote),
   });
 
-const _newPost = (newPostData) => {
+const _newPost = newPostData => {
   return fetch(`${api}/posts`, {
     headers,
     method: 'POST',
-		body: JSON.stringify(newPostData)
+    body: JSON.stringify(newPostData),
   })
     .then(res => res.json())
     .then(data => data);

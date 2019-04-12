@@ -2,10 +2,12 @@ import {
   upVoteComment as upVote,
   downVoteComment as downVote,
   getComments,
+	newComment,
 } from '../utils/ReadableAPI';
 
-export const VOTE_COMMENT = 'VOTE_COMMENT';
+export const ADD_COMMENT = 'ADD_COMMENT';
 export const RECEIVE_COMMENTS = 'RECEIVE_COMMENTS';
+export const VOTE_COMMENT = 'VOTE_COMMENT';
 
 export function handleComments(id) {
   return dispatch => {
@@ -14,6 +16,15 @@ export function handleComments(id) {
     });
   };
 }
+
+export function handleNewComment(comment) {
+  return dispatch => {
+    return newComment(comment).then(data => {
+      dispatch(addComment(data));
+    });
+  };
+}
+
 export function handleUpVote(id) {
   return dispatch => {
     dispatch(upVoteComment(id));
@@ -33,6 +44,13 @@ export function handleDownVote(id) {
       console.log(e);
       alert('There was an error, try again.');
     });
+  };
+}
+
+function addComment(comment) {
+  return {
+    type: ADD_COMMENT,
+    comment,
   };
 }
 
