@@ -39,6 +39,10 @@ export function removeComment(id) {
   return _removeComment(id);
 }
 
+export function editComment(id, params) {
+  return _editComment(id, params);
+}
+
 export function upVotePost(id) {
   return _votePost(id, {option: 'upVote'});
 }
@@ -93,6 +97,15 @@ const _removeComment = id => {
     .then(res => res.json())
     .then(data => data);
 };
+
+const _editComment = (id, params) =>
+  fetch(`${api}/comments/${id}`, {
+    headers,
+    method: 'PUT',
+    body: JSON.stringify(params),
+  })
+    .then(res => res.json())
+    .then(data => data);
 
 const _votePost = (id, vote) =>
   fetch(`${api}/posts/${id}`, {

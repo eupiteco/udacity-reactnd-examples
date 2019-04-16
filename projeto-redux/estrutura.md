@@ -68,13 +68,13 @@ Um agregador de conteúdo, semelhante ao reddit ou hackernews, em que é possív
 		- Texto OK
 		- Data legível OK
 	* Controles para votar OK
-	* Editar
-	* Remover
+	* Editar OK
+	* Remover OK
 	* Ações
 		- GET _comment from _comment OK
 			- GET _score from _comment OK
-			- SET _score from _comment
-			- REM _comment from comments
+			- SET _score from _comment OK
+			- REM _comment from comments OK
 		- GET _authedUser OK
 			- SET _canEdit from _author _from comment
 

@@ -47,9 +47,10 @@ class NewComment extends React.Component {
   };
 }
 
-const mapStateToProps = ({ flags}, { match }) => ({
+const mapStateToProps = ({ flags}, { match, id }) => ({
 	author: flags.authedUser,
 	parentId: match.params.id,
+	id,
 })
 
 const mapDispatchToProps = dispatch => ({

@@ -4,11 +4,13 @@ import {
   getComments,
   newComment,
   removeComment,
+  editComment,
 } from '../utils/ReadableAPI';
 
 export const ADD_COMMENT = 'ADD_COMMENT';
 export const RECEIVE_COMMENTS = 'RECEIVE_COMMENTS';
 export const REMOVE_COMMENT = 'REMOVE_COMMENT';
+export const EDIT_COMMENT = 'EDIT_COMMENT';
 export const VOTE_COMMENT = 'VOTE_COMMENT';
 
 export function handleComments(id) {
@@ -31,6 +33,14 @@ export function handleRemoveComment(id) {
   return dispatch => {
     return removeComment(id).then(data => {
       dispatch(remComment(data));
+    });
+  };
+}
+
+export function handleEditComment(id, params) {
+  return dispatch => {
+    return editComment(id, params).then(editedComment => {
+      dispatch(edComment(editedComment));
     });
   };
 }
@@ -68,6 +78,13 @@ function remComment(removedComment) {
   return {
     type: REMOVE_COMMENT,
     removedComment,
+  };
+}
+
+function edComment(editedComment) {
+  return {
+    type: EDIT_COMMENT,
+    editedComment,
   };
 }
 

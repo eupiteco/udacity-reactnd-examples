@@ -6,14 +6,23 @@ import {
   handleDownVote,
   handleRemoveComment,
 } from '../actions/comments';
+import EditComment from './EditComment';
 import VoteControls from './VoteControls';
+import EditRemoveControls from './EditRemoveControls';
 import {Edit as EditIcon, Trash2 as RemoveIcon} from 'react-feather';
 
 class Comment extends React.Component {
+  state = {
+    isEditing: false,
+  };
+
   render() {
-    const {id, upVote, downVote} = this.props;
+    const {id, upVote, downVote, authedUser} = this.props;
     const {author, body, timestamp, voteScore} = this.props.comment;
     const date = formatDate(timestamp);
+    if (this.state.isEditing) {
+      return <EditComment id={id} cancelAction={this.cancelEditing} />;
+    }
     return (
       <div className="comment">
         <VoteControls
@@ -23,14 +32,13 @@ class Comment extends React.Component {
           voteScore={voteScore}
         />
         <div className="comment-content">
-          <div className="rem-ed-buttons">
-            <button className="icon-btn">
-              <EditIcon size={18} />
-            </button>
-            <button className="icon-btn" onClick={() => this.props.remove(id)}>
-              <RemoveIcon size={18} />
-            </button>
-          </div>
+          {authedUser === author && (
+            <EditRemoveControls
+              size="s"
+              editAction={this.startEditing}
+              removeAction={this.removeComment}
+            />
+          )}
           <div className="details">
             <strong className="author">{author}</strong>{' '}
             <span className="date">{date}</span>
@@ -40,11 +48,29 @@ class Comment extends React.Component {
       </div>
     );
   }
+
+  removeComment = () => {
+    return this.props.remove(this.props.id);
+  };
+
+  startEditing = () => {
+    return this.setState(() => ({
+      isEditing: true,
+    }));
+  };
+
+  cancelEditing = () => {
+    return this.setState(() => ({
+      isEditing: false,
+    }));
+  };
 }
 
-const mapStateToProps = ({comments}, {id}) => {
+const mapStateToProps = ({comments, flags}, {id}) => {
+  const {authedUser} = flags;
   return {
     comment: comments[id],
+    authedUser,
     id,
   };
 };
