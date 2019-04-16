@@ -54,6 +54,15 @@ export function downVotePost(id) {
 export function newPost(data) {
   return _newPost(data);
 }
+
+export function removePost(id) {
+  return _removePost(id);
+}
+
+export function editPost(id, params) {
+  return _editPost(id, params);
+}
+//
 // Server data handles
 const api = 'http://localhost:3001';
 
@@ -128,6 +137,21 @@ const _newPost = newPostData => {
     .then(res => res.json())
     .then(data => data);
 };
+
+const _removePost = id => {
+  return fetch(`${api}/posts/${id}`, {headers, method: 'DELETE'})
+    .then(res => res.json())
+    .then(data => data);
+};
+
+const _editPost = (id, params) =>
+  fetch(`${api}/posts/${id}`, {
+    headers,
+    method: 'PUT',
+    body: JSON.stringify(params),
+  })
+    .then(res => res.json())
+    .then(data => data);
 
 const _getDetails = id => {
   return fetch(`${api}/posts/${id}`, {headers})

@@ -3,7 +3,7 @@ import {
   VOTE_COMMENT,
   ADD_COMMENT,
   REMOVE_COMMENT,
-	EDIT_COMMENT,
+  EDIT_COMMENT,
 } from '../actions/comments';
 
 export function comments(state = {}, action) {
@@ -39,14 +39,14 @@ export function comments(state = {}, action) {
         ...state,
         [removedComment.id]: removedComment,
       };
-		case EDIT_COMMENT:
-		const { editedComment } = action;
-		return {
-			...state,
-			[editedComment.id]: {
-				...editedComment,
-			}
-		}
+    case EDIT_COMMENT:
+      const {editedComment} = action;
+      return {
+        ...state,
+        [editedComment.id]: {
+          ...editedComment,
+        },
+      };
     default:
       return state;
   }

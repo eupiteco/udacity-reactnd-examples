@@ -9,7 +9,6 @@ import {
 import EditComment from './EditComment';
 import VoteControls from './VoteControls';
 import EditRemoveControls from './EditRemoveControls';
-import {Edit as EditIcon, Trash2 as RemoveIcon} from 'react-feather';
 
 class Comment extends React.Component {
   state = {

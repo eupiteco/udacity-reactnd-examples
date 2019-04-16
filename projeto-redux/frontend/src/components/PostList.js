@@ -23,11 +23,14 @@ const mapStateToProps = ({posts, flags}, {match}) => {
           (a, b) => posts[b].timestamp - posts[a].timestamp,
         )
       : Object.keys(posts).sort(
-          (a, b) => posts[b].commentCount - posts[a].commentCount,
+          (a, b) => posts[b].voteScore - posts[a].voteScore,
         );
-  const filteredPosts = match.params.category
+  const postsByCategory = match.params.category
     ? sortedPosts.filter(id => posts[id].category === match.params.category)
     : sortedPosts;
+  const filteredPosts = postsByCategory.filter(
+    id => posts[id].deleted === false,
+  );
 
   return {
     postIds: filteredPosts,

@@ -1,4 +1,4 @@
-import {ADD_POST, RECEIVE_POSTS, VOTE_POST} from '../actions/posts';
+import {ADD_POST, RECEIVE_POSTS, VOTE_POST, REMOVE_POST, EDIT_POST} from '../actions/posts';
 import {ADD_COMMENT, REMOVE_COMMENT} from '../actions/comments';
 
 export function posts(state = {}, action) {
@@ -27,6 +27,20 @@ export function posts(state = {}, action) {
       return {
         ...state,
         [post.id]: post,
+      };
+    case REMOVE_POST:
+      const {removedPost} = action;
+      return {
+        ...state,
+        [removedPost.id]: removedPost,
+      };
+    case EDIT_POST:
+      const {editedPost} = action;
+      return {
+        ...state,
+        [editedPost.id]: {
+          ...editedPost,
+        },
       };
     case ADD_COMMENT:
       const {parentId} = action.comment;

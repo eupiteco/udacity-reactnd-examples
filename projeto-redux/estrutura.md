@@ -49,7 +49,7 @@ Um agregador de conteúdo, semelhante ao reddit ou hackernews, em que é possív
 		- Data legível OK
 	* Controles para votar OK
 	* Editar
-	* Remover
+	* Remover OK
 	* Form para comentários OK
 	* Ações OK
 		- GET _comments from _posts OK
@@ -59,7 +59,7 @@ Um agregador de conteúdo, semelhante ao reddit ou hackernews, em que é possív
 			- GET _comments from _post OK
 			- REM _post from posts OK
 		- GET _authedUser OK
-			- SET _canEdit from _author _from post
+			- SET _canEdit from _author _from post OK
 
 ## Comentário
 	* Mostra dados do autor OK
@@ -70,18 +70,18 @@ Um agregador de conteúdo, semelhante ao reddit ou hackernews, em que é possív
 	* Controles para votar OK
 	* Editar OK
 	* Remover OK
-	* Ações
+	* Ações OK
 		- GET _comment from _comment OK
 			- GET _score from _comment OK
 			- SET _score from _comment OK
 			- REM _comment from comments OK
 		- GET _authedUser OK
-			- SET _canEdit from _author _from comment
+			- SET _canEdit from _author _from comment OK
 
 ## Forms
 	* Precisam ter o usuário logado OK
 	* Enviam objetos para o servidor OK
-	* Se receberem um `id`, populam os campos
+	* Se receberem um `id`, populam os campos OK
 	* Post OK
 		- Título OK
 		- Texto OK
@@ -89,7 +89,7 @@ Um agregador de conteúdo, semelhante ao reddit ou hackernews, em que é possív
 	* Comentário OK
 		- Texto OK
 	* Ações
-		- GET _obj from _objList
+		- GET _obj from _objList OK
 		- POST _obj in _objList OK
 
 ## Controles de voto
