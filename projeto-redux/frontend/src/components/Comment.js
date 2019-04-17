@@ -1,23 +1,32 @@
-import React from 'react';
-import {connect} from 'react-redux';
-import {formatDate} from '../utils/helpers';
+import React from "react";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+import { formatDate } from "../utils/helpers";
 import {
   handleUpVote,
   handleDownVote,
-  handleRemoveComment,
-} from '../actions/comments';
-import EditComment from './EditComment';
-import VoteControls from './VoteControls';
-import EditRemoveControls from './EditRemoveControls';
+  handleRemoveComment
+} from "../actions/comments";
+import EditComment from "./EditComment";
+import VoteControls from "./VoteControls";
+import EditRemoveControls from "./EditRemoveControls";
 
 class Comment extends React.Component {
+  static propTypes = {
+    authedUser: PropTypes.string.isRequired,
+    id: PropTypes.string.isRequired,
+    comment: PropTypes.object.isRequired,
+    remove: PropTypes.func.isRequired,
+    upVote: PropTypes.func.isRequired,
+    downVote: PropTypes.func.isRequired
+  };
   state = {
-    isEditing: false,
+    isEditing: false
   };
 
   render() {
-    const {id, upVote, downVote, authedUser} = this.props;
-    const {author, body, timestamp, voteScore} = this.props.comment;
+    const { id, upVote, downVote, authedUser } = this.props;
+    const { author, body, timestamp, voteScore } = this.props.comment;
     const date = formatDate(timestamp);
     if (this.state.isEditing) {
       return <EditComment id={id} cancelAction={this.cancelEditing} />;
@@ -39,7 +48,7 @@ class Comment extends React.Component {
             />
           )}
           <div className="details">
-            <strong className="author">{author}</strong>{' '}
+            <strong className="author">{author}</strong>{" "}
             <span className="date">{date}</span>
           </div>
           <p>{body}</p>
@@ -54,33 +63,33 @@ class Comment extends React.Component {
 
   startEditing = () => {
     return this.setState(() => ({
-      isEditing: true,
+      isEditing: true
     }));
   };
 
   cancelEditing = () => {
     return this.setState(() => ({
-      isEditing: false,
+      isEditing: false
     }));
   };
 }
 
-const mapStateToProps = ({comments, flags}, {id}) => {
-  const {authedUser} = flags;
+const mapStateToProps = ({ comments, flags }, { id }) => {
+  const { authedUser } = flags;
   return {
     comment: comments[id],
     authedUser,
-    id,
+    id
   };
 };
 
 const mapDispatchToProps = dispatch => ({
   remove: id => dispatch(handleRemoveComment(id)),
   upVote: id => dispatch(handleUpVote(id)),
-  downVote: id => dispatch(handleDownVote(id)),
+  downVote: id => dispatch(handleDownVote(id))
 });
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps,
+  mapDispatchToProps
 )(Comment);

@@ -2,28 +2,28 @@ import {
   upVotePost as upVote,
   downVotePost as downVote,
   newPost,
-	removePost,
-	editPost,
-} from '../utils/ReadableAPI';
+  removePost,
+  editPost
+} from "../utils/ReadableAPI";
 
-export const RECEIVE_POSTS = 'RECEIVE_POSTS';
-export const ADD_POST = 'ADD_POST';
-export const REMOVE_POST = 'REMOVE_POST';
-export const EDIT_POST = 'EDIT_POST';
-export const SORT_POSTS = 'SORT_POSTS';
-export const VOTE_POST = 'VOTE_POST';
+export const RECEIVE_POSTS = "RECEIVE_POSTS";
+export const ADD_POST = "ADD_POST";
+export const REMOVE_POST = "REMOVE_POST";
+export const EDIT_POST = "EDIT_POST";
+export const SORT_POSTS = "SORT_POSTS";
+export const VOTE_POST = "VOTE_POST";
 
 export function receivePosts(posts) {
   return {
     type: RECEIVE_POSTS,
-    posts,
+    posts
   };
 }
 
 export function sortPosts(sortBy) {
   return {
     type: SORT_POSTS,
-    sortBy,
+    sortBy
   };
 }
 
@@ -46,7 +46,7 @@ export function handleRemovePost(id) {
 
 export function handleEditPost(id, newPost) {
   return dispatch => {
-		console.log("NA ACTION: ", id, newPost)
+    console.log("NA ACTION: ", id, newPost);
     return editPost(id, newPost).then(editedPost => {
       dispatch(edPost(editedPost));
     });
@@ -59,7 +59,7 @@ export function handleUpVote(id) {
     return upVote(id).catch(e => {
       dispatch(downVotePost(id));
       console.log(e);
-      alert('There was an error, try again.');
+      alert("There was an error, try again.");
     });
   };
 }
@@ -70,7 +70,7 @@ export function handleDownVote(id) {
     return downVote(id).catch(e => {
       dispatch(upVotePost(id));
       console.log(e);
-      alert('There was an error, try again.');
+      alert("There was an error, try again.");
     });
   };
 }
@@ -78,21 +78,21 @@ export function handleDownVote(id) {
 function addPost(post) {
   return {
     type: ADD_POST,
-    post,
+    post
   };
 }
 
 function remPost(removedPost) {
   return {
     type: REMOVE_POST,
-    removedPost,
+    removedPost
   };
 }
 
 function edPost(editedPost) {
   return {
     type: EDIT_POST,
-    editedPost,
+    editedPost
   };
 }
 
@@ -101,8 +101,8 @@ function upVotePost(id) {
     type: VOTE_POST,
     data: {
       id,
-      vote: 1,
-    },
+      vote: 1
+    }
   };
 }
 
@@ -111,7 +111,7 @@ function downVotePost(id) {
     type: VOTE_POST,
     data: {
       id,
-      vote: -1,
-    },
+      vote: -1
+    }
   };
 }

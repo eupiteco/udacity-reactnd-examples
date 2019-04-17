@@ -150,11 +150,11 @@ select {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-	margin: 20px 0;
+  margin: 20px 0;
 }
 
 .edit-comment .buttons {
-	float: none;
+  float: none;
 }
 
 .title-input,
@@ -163,8 +163,8 @@ select {
   border-radius: 3px;
   box-sizing: border-box;
   color: #333;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
   margin: 10px 0;
   padding: 7px 10px;
@@ -181,7 +181,7 @@ select {
 }
 
 .buttons {
-	float: right;
+  float: right;
 }
 
 .rem-ed-buttons {

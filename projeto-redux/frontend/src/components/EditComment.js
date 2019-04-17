@@ -1,10 +1,17 @@
-import React from 'react';
-import {connect} from 'react-redux';
-import {handleEditComment} from '../actions/comments';
+import React from "react";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+import { handleEditComment } from "../actions/comments";
 
 class EditComment extends React.Component {
+  static propTypes = {
+    author: PropTypes.string.isRequired,
+    comment: PropTypes.object.isRequired,
+    stopEditing: PropTypes.func.isRequired,
+    editComment: PropTypes.func.isRequired
+  };
   state = {
-    body: '',
+    body: ""
   };
   componentDidMount() {
     this.setContent();
@@ -25,7 +32,8 @@ class EditComment extends React.Component {
           <button
             className="btn btn-submit"
             type="submit"
-            onClick={this.handleSubmit}>
+            onClick={this.handleSubmit}
+          >
             Submit
           </button>
         </div>
@@ -34,39 +42,39 @@ class EditComment extends React.Component {
   }
   setContent = () => {
     this.setState(() => ({
-      body: this.props.comment.body,
+      body: this.props.comment.body
     }));
   };
 
   handleBody = e => {
     const body = e.target.value;
     this.setState(() => ({
-      body,
+      body
     }));
   };
 
   handleSubmit = e => {
     e.preventDefault();
-    const {id} = this.props.comment;
+    const { id } = this.props.comment;
     const timestamp = Date.now();
-    const {editComment} = this.props;
-    const {body} = this.state;
-    editComment(id, {timestamp, body});
-		this.props.stopEditing();
+    const { editComment } = this.props;
+    const { body } = this.state;
+    editComment(id, { timestamp, body });
+    this.props.stopEditing();
   };
 }
 
-const mapStateToProps = ({comments, flags}, {cancelAction, id}) => ({
+const mapStateToProps = ({ comments, flags }, { cancelAction, id }) => ({
   author: flags.authedUser,
   comment: comments[id],
-  stopEditing: cancelAction,
+  stopEditing: cancelAction
 });
 
 const mapDispatchToProps = dispatch => ({
-  editComment: (id, params) => dispatch(handleEditComment(id, params)),
+  editComment: (id, params) => dispatch(handleEditComment(id, params))
 });
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps,
+  mapDispatchToProps
 )(EditComment);

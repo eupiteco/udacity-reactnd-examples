@@ -3,49 +3,49 @@ import {
   VOTE_COMMENT,
   ADD_COMMENT,
   REMOVE_COMMENT,
-  EDIT_COMMENT,
-} from '../actions/comments';
+  EDIT_COMMENT
+} from "../actions/comments";
 
 export function comments(state = {}, action) {
   switch (action.type) {
     case RECEIVE_COMMENTS:
-      const {comments} = action;
+      const { comments } = action;
       const commentsById = {};
       comments.forEach(c => {
         commentsById[c.id] = c;
       });
       return {
-        ...commentsById,
+        ...commentsById
       };
     case VOTE_COMMENT:
-      const {id, vote} = action.data;
+      const { id, vote } = action.data;
       const newScore = state[id].voteScore + vote;
       return {
         ...state,
         [id]: {
           ...state[id],
-          voteScore: newScore,
-        },
+          voteScore: newScore
+        }
       };
     case ADD_COMMENT:
-      const {comment} = action;
+      const { comment } = action;
       return {
         ...state,
-        [comment.id]: comment,
+        [comment.id]: comment
       };
     case REMOVE_COMMENT:
-      const {removedComment} = action;
+      const { removedComment } = action;
       return {
         ...state,
-        [removedComment.id]: removedComment,
+        [removedComment.id]: removedComment
       };
     case EDIT_COMMENT:
-      const {editedComment} = action;
+      const { editedComment } = action;
       return {
         ...state,
         [editedComment.id]: {
-          ...editedComment,
-        },
+          ...editedComment
+        }
       };
     default:
       return state;

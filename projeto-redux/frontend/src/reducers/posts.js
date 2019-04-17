@@ -1,5 +1,11 @@
-import {ADD_POST, RECEIVE_POSTS, VOTE_POST, REMOVE_POST, EDIT_POST} from '../actions/posts';
-import {ADD_COMMENT, REMOVE_COMMENT} from '../actions/comments';
+import {
+  ADD_POST,
+  RECEIVE_POSTS,
+  VOTE_POST,
+  REMOVE_POST,
+  EDIT_POST
+} from "../actions/posts";
+import { ADD_COMMENT, REMOVE_COMMENT } from "../actions/comments";
 
 export function posts(state = {}, action) {
   switch (action.type) {
@@ -10,46 +16,46 @@ export function posts(state = {}, action) {
       });
       return {
         ...state,
-        ...postsById,
+        ...postsById
       };
     case VOTE_POST:
-      const {id, vote} = action.data;
+      const { id, vote } = action.data;
       const newScore = state[id].voteScore + vote;
       return {
         ...state,
         [id]: {
           ...state[id],
-          voteScore: newScore,
-        },
+          voteScore: newScore
+        }
       };
     case ADD_POST:
-      const {post} = action;
+      const { post } = action;
       return {
         ...state,
-        [post.id]: post,
+        [post.id]: post
       };
     case REMOVE_POST:
-      const {removedPost} = action;
+      const { removedPost } = action;
       return {
         ...state,
-        [removedPost.id]: removedPost,
+        [removedPost.id]: removedPost
       };
     case EDIT_POST:
-      const {editedPost} = action;
+      const { editedPost } = action;
       return {
         ...state,
         [editedPost.id]: {
-          ...editedPost,
-        },
+          ...editedPost
+        }
       };
     case ADD_COMMENT:
-      const {parentId} = action.comment;
+      const { parentId } = action.comment;
       return {
         ...state,
         [parentId]: {
           ...state[parentId],
-          commentCount: state[parentId].commentCount + 1,
-        },
+          commentCount: state[parentId].commentCount + 1
+        }
       };
     case REMOVE_COMMENT:
       const removedId = action.removedComment.parentId;
@@ -57,8 +63,8 @@ export function posts(state = {}, action) {
         ...state,
         [removedId]: {
           ...state[removedId],
-          commentCount: state[removedId].commentCount - 1,
-        },
+          commentCount: state[removedId].commentCount - 1
+        }
       };
     default:
       return state;

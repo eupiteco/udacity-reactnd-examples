@@ -1,9 +1,10 @@
-import React from 'react';
-import {Edit as EditIcon, Trash2 as RemoveIcon} from 'react-feather';
+import React from "react";
+import PropTypes from "prop-types";
+import { Edit as EditIcon, Trash2 as RemoveIcon } from "react-feather";
 
-const EditRemoveControls = ({editAction, removeAction, size}) => {
+const EditRemoveControls = ({ editAction, removeAction, size }) => {
   let iconSize = 24;
-  if (size === 's') iconSize = 18;
+  if (size === "s") iconSize = 18;
   return (
     <div className="rem-ed-buttons">
       <button className="icon-btn" onClick={() => editAction()}>
@@ -14,6 +15,12 @@ const EditRemoveControls = ({editAction, removeAction, size}) => {
       </button>
     </div>
   );
+};
+
+EditRemoveControls.propTypes = {
+  editAction: PropTypes.func.isRequired,
+  removeAction: PropTypes.func.isRequired,
+  size: PropTypes.number.isRequired
 };
 
 export default EditRemoveControls;

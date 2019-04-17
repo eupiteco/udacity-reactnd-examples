@@ -1,25 +1,32 @@
-import React from 'react';
-import {connect} from 'react-redux';
-import {Redirect} from 'react-router-dom';
-import {generateHash} from '../utils/helpers';
-import {handleNewPost} from '../actions/posts';
+import React from "react";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+import { Redirect } from "react-router-dom";
+import { generateHash } from "../utils/helpers";
+import { handleNewPost } from "../actions/posts";
 
 class NewPost extends React.Component {
+  static propTypes = {
+    authedUser: PropTypes.string.isRequired,
+    categories: PropTypes.object.isRequired,
+    categoryIds: PropTypes.arrayOf(PropTypes.string).isRequired,
+    handleNewPost: PropTypes.func.isRequired
+  };
   state = {
-    title: '',
-    body: '',
-    category: '',
-    toHome: false,
+    title: "",
+    body: "",
+    category: "",
+    toHome: false
   };
 
   render() {
-    const {title, body, toHome} = this.state;
-    const {categories, categoryIds} = this.props;
+    const { title, body, toHome } = this.state;
+    const { categories, categoryIds } = this.props;
     if (toHome === true) return <Redirect to="/" />;
     return (
       <div>
-				<h1 className="center">New Post</h1>
-        <div className="new-post" >
+        <h1 className="center">New Post</h1>
+        <div className="new-post">
           <div className="inputs">
             <input
               type="text"
@@ -48,14 +55,16 @@ class NewPost extends React.Component {
             <div className="buttons">
               <button
                 className="btn btn-cancel"
-								onClick={ () => this.setState({ toHome: true }) }>
+                onClick={() => this.setState({ toHome: true })}
+              >
                 Cancel
               </button>
               <button
                 className="btn btn-submit"
                 type="submit"
                 disabled={!this.isValid()}
-								onClick={this.handleSubmit}>
+                onClick={this.handleSubmit}
+              >
                 Submit
               </button>
             </div>
@@ -69,7 +78,7 @@ class NewPost extends React.Component {
     e.preventDefault();
     const timestamp = Date.now();
     const id = generateHash();
-    const {title, body, category} = this.state;
+    const { title, body, category } = this.state;
     const author = this.props.authedUser;
     const newPost = {
       id,
@@ -77,61 +86,61 @@ class NewPost extends React.Component {
       body,
       category,
       author,
-      timestamp,
+      timestamp
     };
     this.props.handleNewPost(newPost);
 
     this.setState(() => ({
-      title: '',
-      body: '',
-      category: '',
-      toHome: true,
+      title: "",
+      body: "",
+      category: "",
+      toHome: true
     }));
   };
 
   isValid = () => {
-    const {title, body, category} = this.state;
-    if (title === '' || body === '' || category === '') return false;
+    const { title, body, category } = this.state;
+    if (title === "" || body === "" || category === "") return false;
     return true;
   };
 
   handleTitle = e => {
     const title = e.target.value;
     this.setState(() => ({
-      title,
+      title
     }));
   };
 
   handleContent = e => {
     const body = e.target.value;
     this.setState(() => ({
-      body,
+      body
     }));
   };
 
   handleCategory = e => {
     const category = e.target.value;
     this.setState(() => ({
-      category,
+      category
     }));
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    handleNewPost: data => dispatch(handleNewPost(data)),
+    handleNewPost: data => dispatch(handleNewPost(data))
   };
 }
 
-function mapStateToProps({categories, flags}) {
-  const {authedUser} = flags;
+function mapStateToProps({ categories, flags }) {
+  const { authedUser } = flags;
   return {
     authedUser,
     categories,
-    categoryIds: Object.keys(categories),
+    categoryIds: Object.keys(categories)
   };
 }
 export default connect(
   mapStateToProps,
-  mapDispatchToProps,
+  mapDispatchToProps
 )(NewPost);

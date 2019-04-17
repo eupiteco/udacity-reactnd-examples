@@ -1,19 +1,19 @@
-import {SORT_POSTS} from '../actions/posts';
-import {SET_AUTHED_USER} from '../actions/shared';
+import { SORT_POSTS } from "../actions/posts";
+import { SET_AUTHED_USER } from "../actions/shared";
 
-export function flags(state = {sortBy: 'score', authedUser: null}, action) {
+export function flags(state = { sortBy: "score", authedUser: null }, action) {
   switch (action.type) {
     case SORT_POSTS:
-      const {sortBy} = action;
+      const { sortBy } = action;
       return {
         ...state,
-        sortBy,
+        sortBy
       };
     case SET_AUTHED_USER:
-      const {id} = action;
+      const { id } = action;
       return {
         ...state,
-        authedUser: id,
+        authedUser: id
       };
     default:
       return state;

@@ -1,12 +1,19 @@
-import React from 'react';
-import {connect} from 'react-redux';
-import {withRouter} from 'react-router-dom';
-import {generateHash} from '../utils/helpers';
-import {handleNewComment} from '../actions/comments';
+import React from "react";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+import { withRouter } from "react-router-dom";
+import { generateHash } from "../utils/helpers";
+import { handleNewComment } from "../actions/comments";
 
 class NewComment extends React.Component {
+  static propTypes = {
+    author: PropTypes.string.isRequired,
+    parentId: PropTypes.string.isRequired,
+    id: PropTypes.string.isRequired,
+    sendComment: PropTypes.func.isRequired
+  };
   state = {
-    body: '',
+    body: ""
   };
   render() {
     return (
@@ -20,13 +27,15 @@ class NewComment extends React.Component {
         <div className="buttons">
           <button
             className="btn btn-cancel"
-            onClick={() => this.setState({body: ''})}>
+            onClick={() => this.setState({ body: "" })}
+          >
             Cancel
           </button>
           <button
             className="btn btn-submit"
             onClick={this.handleSubmit}
-            disabled={this.state.body === ''}>
+            disabled={this.state.body === ""}
+          >
             Submit
           </button>
         </div>
@@ -37,7 +46,7 @@ class NewComment extends React.Component {
   handleBody = e => {
     const body = e.target.value;
     this.setState(() => ({
-      body,
+      body
     }));
   };
 
@@ -45,26 +54,26 @@ class NewComment extends React.Component {
     e.preventDefault();
     const id = generateHash();
     const timestamp = Date.now();
-    const {author, parentId, sendComment} = this.props;
-    const {body} = this.state;
-    sendComment({id, timestamp, author, body, parentId});
-    this.setState({body: ''});
+    const { author, parentId, sendComment } = this.props;
+    const { body } = this.state;
+    sendComment({ id, timestamp, author, body, parentId });
+    this.setState({ body: "" });
   };
 }
 
-const mapStateToProps = ({flags}, {match, id}) => ({
+const mapStateToProps = ({ flags }, { match, id }) => ({
   author: flags.authedUser,
   parentId: match.params.id,
-  id,
+  id
 });
 
 const mapDispatchToProps = dispatch => ({
-  sendComment: data => dispatch(handleNewComment(data)),
+  sendComment: data => dispatch(handleNewComment(data))
 });
 
 export default withRouter(
   connect(
     mapStateToProps,
-    mapDispatchToProps,
-  )(NewComment),
+    mapDispatchToProps
+  )(NewComment)
 );

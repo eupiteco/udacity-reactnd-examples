@@ -1,12 +1,12 @@
-import {generateHash} from './helpers';
+import { generateHash } from "./helpers";
 
 // Frontend data sending
 export function getInitialData() {
   return Promise.all([_getPosts(), _getCategories()]).then(
     ([posts, categories]) => ({
       posts,
-      categories,
-    }),
+      categories
+    })
   );
 }
 
@@ -14,8 +14,8 @@ export function getSinglePost(id) {
   return Promise.all([_getDetails(id), _getComments(id)]).then(
     ([details, comments]) => ({
       details,
-      comments,
-    }),
+      comments
+    })
   );
 }
 
@@ -28,11 +28,11 @@ export function newComment(data) {
 }
 
 export function upVoteComment(id) {
-  return _voteComment(id, {option: 'upVote'});
+  return _voteComment(id, { option: "upVote" });
 }
 
 export function downVoteComment(id) {
-  return _voteComment(id, {option: 'downVote'});
+  return _voteComment(id, { option: "downVote" });
 }
 
 export function removeComment(id) {
@@ -44,11 +44,11 @@ export function editComment(id, params) {
 }
 
 export function upVotePost(id) {
-  return _votePost(id, {option: 'upVote'});
+  return _votePost(id, { option: "upVote" });
 }
 
 export function downVotePost(id) {
-  return _votePost(id, {option: 'downVote'});
+  return _votePost(id, { option: "downVote" });
 }
 
 export function newPost(data) {
@@ -64,45 +64,45 @@ export function editPost(id, params) {
 }
 //
 // Server data handles
-const api = 'http://localhost:3001';
+const api = "http://localhost:3001";
 
 let token = localStorage.token;
 if (!token) token = localStorage.token = generateHash();
 const headers = {
-  Accept: 'application/json',
-  'Content-Type': 'application/json',
-  Authorization: token,
+  Accept: "application/json",
+  "Content-Type": "application/json",
+  Authorization: token
 };
 
 const _getCategories = () =>
-  fetch(`${api}/categories`, {headers})
+  fetch(`${api}/categories`, { headers })
     .then(res => res.json())
     .then(data => data.categories);
 
 const _getComments = id =>
-  fetch(`${api}/posts/${id}/comments`, {headers})
+  fetch(`${api}/posts/${id}/comments`, { headers })
     .then(res => res.json())
     .then(data => data);
 
 const _voteComment = (id, vote) =>
   fetch(`${api}/comments/${id}`, {
     headers,
-    method: 'POST',
-    body: JSON.stringify(vote),
+    method: "POST",
+    body: JSON.stringify(vote)
   });
 
 const _newComment = newCommentData => {
   return fetch(`${api}/comments`, {
     headers,
-    method: 'POST',
-    body: JSON.stringify(newCommentData),
+    method: "POST",
+    body: JSON.stringify(newCommentData)
   })
     .then(res => res.json())
     .then(data => data);
 };
 
 const _removeComment = id => {
-  return fetch(`${api}/comments/${id}`, {headers, method: 'DELETE'})
+  return fetch(`${api}/comments/${id}`, { headers, method: "DELETE" })
     .then(res => res.json())
     .then(data => data);
 };
@@ -110,8 +110,8 @@ const _removeComment = id => {
 const _editComment = (id, params) =>
   fetch(`${api}/comments/${id}`, {
     headers,
-    method: 'PUT',
-    body: JSON.stringify(params),
+    method: "PUT",
+    body: JSON.stringify(params)
   })
     .then(res => res.json())
     .then(data => data);
@@ -119,27 +119,27 @@ const _editComment = (id, params) =>
 const _votePost = (id, vote) =>
   fetch(`${api}/posts/${id}`, {
     headers,
-    method: 'POST',
-    body: JSON.stringify(vote),
+    method: "POST",
+    body: JSON.stringify(vote)
   });
 
 const _getPosts = () =>
-  fetch(`${api}/posts`, {headers})
+  fetch(`${api}/posts`, { headers })
     .then(res => res.json())
     .then(data => data);
 
 const _newPost = newPostData => {
   return fetch(`${api}/posts`, {
     headers,
-    method: 'POST',
-    body: JSON.stringify(newPostData),
+    method: "POST",
+    body: JSON.stringify(newPostData)
   })
     .then(res => res.json())
     .then(data => data);
 };
 
 const _removePost = id => {
-  return fetch(`${api}/posts/${id}`, {headers, method: 'DELETE'})
+  return fetch(`${api}/posts/${id}`, { headers, method: "DELETE" })
     .then(res => res.json())
     .then(data => data);
 };
@@ -147,14 +147,14 @@ const _removePost = id => {
 const _editPost = (id, params) =>
   fetch(`${api}/posts/${id}`, {
     headers,
-    method: 'PUT',
-    body: JSON.stringify(params),
+    method: "PUT",
+    body: JSON.stringify(params)
   })
     .then(res => res.json())
     .then(data => data);
 
 const _getDetails = id => {
-  return fetch(`${api}/posts/${id}`, {headers})
+  return fetch(`${api}/posts/${id}`, { headers })
     .then(res => res.json())
     .then(data => data);
 };

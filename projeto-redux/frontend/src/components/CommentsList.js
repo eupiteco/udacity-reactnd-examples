@@ -1,10 +1,14 @@
-import React from 'react';
-import {connect} from 'react-redux';
-import Comment from './Comment';
+import React from "react";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+import Comment from "./Comment";
 
 class CommentsList extends React.Component {
+  static propTypes = {
+    commentsIds: PropTypes.arrayOf(PropTypes.string).isRequired
+  };
   render() {
-    const {commentsIds} = this.props;
+    const { commentsIds } = this.props;
     return (
       <div className="comment-list">
         {commentsIds.map(id => {
@@ -15,14 +19,14 @@ class CommentsList extends React.Component {
   }
 }
 
-const mapStateToProps = ({comments}) => {
+const mapStateToProps = ({ comments }) => {
   const commentsIds = comments
     ? Object.keys(comments)
         .sort((a, b) => comments[b].timestamp - comments[a].timestamp)
         .filter(id => comments[id].deleted === false)
     : [];
   return {
-    commentsIds,
+    commentsIds
   };
 };
 export default connect(mapStateToProps)(CommentsList);

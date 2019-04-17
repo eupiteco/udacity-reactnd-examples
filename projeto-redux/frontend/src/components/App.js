@@ -1,16 +1,21 @@
-import React, {Component} from 'react';
-import {connect} from 'react-redux';
-import {BrowserRouter as Router, Route} from 'react-router-dom';
-import {LoadingBar} from 'react-redux-loading';
-import '../assets/App.css';
-import {handleInitialData} from '../actions/shared';
-import Dashboard from './Dashboard';
-import Nav from './Nav';
-import PostPage from './PostPage';
-import NewPost from './NewPost';
-import EditPost from './EditPost';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { BrowserRouter as Router, Route } from "react-router-dom";
+import { LoadingBar } from "react-redux-loading";
+import "../assets/App.css";
+import { handleInitialData } from "../actions/shared";
+import Dashboard from "./Dashboard";
+import Nav from "./Nav";
+import PostPage from "./PostPage";
+import NewPost from "./NewPost";
+import EditPost from "./EditPost";
 
 class App extends Component {
+  static propTypes: {
+    loading: PropTypes.bool.isRequired
+  };
+
   componentDidMount() {
     this.props.dispatch(handleInitialData());
   }
@@ -39,10 +44,10 @@ class App extends Component {
   }
 }
 
-function mapStateToProps({flags}) {
-  const {authedUser} = flags;
+function mapStateToProps({ flags }) {
+  const { authedUser } = flags;
   return {
-    loading: authedUser === null,
+    loading: authedUser === null
   };
 }
 export default connect(mapStateToProps)(App);

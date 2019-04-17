@@ -4,14 +4,14 @@ import {
   getComments,
   newComment,
   removeComment,
-  editComment,
-} from '../utils/ReadableAPI';
+  editComment
+} from "../utils/ReadableAPI";
 
-export const ADD_COMMENT = 'ADD_COMMENT';
-export const RECEIVE_COMMENTS = 'RECEIVE_COMMENTS';
-export const REMOVE_COMMENT = 'REMOVE_COMMENT';
-export const EDIT_COMMENT = 'EDIT_COMMENT';
-export const VOTE_COMMENT = 'VOTE_COMMENT';
+export const ADD_COMMENT = "ADD_COMMENT";
+export const RECEIVE_COMMENTS = "RECEIVE_COMMENTS";
+export const REMOVE_COMMENT = "REMOVE_COMMENT";
+export const EDIT_COMMENT = "EDIT_COMMENT";
+export const VOTE_COMMENT = "VOTE_COMMENT";
 
 export function handleComments(id) {
   return dispatch => {
@@ -51,7 +51,7 @@ export function handleUpVote(id) {
     return upVote(id).catch(e => {
       dispatch(downVoteComment(id));
       console.log(e);
-      alert('There was an error, try again.');
+      alert("There was an error, try again.");
     });
   };
 }
@@ -62,7 +62,7 @@ export function handleDownVote(id) {
     return downVote(id).catch(e => {
       dispatch(upVoteComment(id));
       console.log(e);
-      alert('There was an error, try again.');
+      alert("There was an error, try again.");
     });
   };
 }
@@ -70,28 +70,28 @@ export function handleDownVote(id) {
 function addComment(comment) {
   return {
     type: ADD_COMMENT,
-    comment,
+    comment
   };
 }
 
 function remComment(removedComment) {
   return {
     type: REMOVE_COMMENT,
-    removedComment,
+    removedComment
   };
 }
 
 function edComment(editedComment) {
   return {
     type: EDIT_COMMENT,
-    editedComment,
+    editedComment
   };
 }
 
 function receiveComments(comments) {
   return {
     type: RECEIVE_COMMENTS,
-    comments,
+    comments
   };
 }
 
@@ -100,8 +100,8 @@ function upVoteComment(id) {
     type: VOTE_COMMENT,
     data: {
       id,
-      vote: 1,
-    },
+      vote: 1
+    }
   };
 }
 
@@ -110,7 +110,7 @@ function downVoteComment(id) {
     type: VOTE_COMMENT,
     data: {
       id,
-      vote: -1,
-    },
+      vote: -1
+    }
   };
 }
