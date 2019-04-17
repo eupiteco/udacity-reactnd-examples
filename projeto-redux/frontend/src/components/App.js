@@ -8,6 +8,7 @@ import Dashboard from './Dashboard';
 import Nav from './Nav';
 import PostPage from './PostPage';
 import NewPost from './NewPost';
+import EditPost from './EditPost';
 
 class App extends Component {
   componentDidMount() {
@@ -26,6 +27,7 @@ class App extends Component {
                 <Route path="/" exact component={Dashboard} />
                 <Route path="/c/:category" component={Dashboard} />
                 <Route path="/new" component={NewPost} />
+                <Route path="/e/:id" component={EditPost} />
                 <Route path="/p/:id" component={PostPage} />
               </div>
             )}

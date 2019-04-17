@@ -44,9 +44,10 @@ export function handleRemovePost(id) {
   };
 }
 
-export function handleEditPost(id, params) {
+export function handleEditPost(id, newPost) {
   return dispatch => {
-    return editPost(id, params).then(editedPost => {
+		console.log("NA ACTION: ", id, newPost)
+    return editPost(id, newPost).then(editedPost => {
       dispatch(edPost(editedPost));
     });
   };

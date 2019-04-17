@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {Link} from 'react-router-dom';
+import {withRouter, Link} from 'react-router-dom';
 import {formatDate} from '../utils/helpers';
 import {handleUpVote, handleDownVote, handleRemovePost} from '../actions/posts';
 import VoteControls from './VoteControls';
@@ -18,7 +18,7 @@ class Post extends React.Component {
       title,
       voteScore,
     } = this.props.post;
-    const {upVote, downVote, authedUser} = this.props;
+    const {upVote, downVote, authedUser, editPost} = this.props;
     const date = formatDate(timestamp);
     return (
       <div className="post" key={id}>
@@ -29,7 +29,10 @@ class Post extends React.Component {
           voteScore={voteScore}
         />
         {authedUser === author && (
-          <EditRemoveControls removeAction={this.removePost} />
+          <EditRemoveControls
+            removeAction={this.removePost}
+            editAction={editPost}
+          />
         )}
         <Link to={`/p/${id}`} className="content">
           <div className="post-header">
@@ -53,10 +56,11 @@ class Post extends React.Component {
   };
 }
 
-const mapStateToProps = ({posts, flags}, {postId, details}) => {
+const mapStateToProps = ({posts, flags}, {postId, details, history}) => {
   const {authedUser} = flags;
   return {
     authedUser,
+    editPost: () => history.push(`/e/${postId}`),
     postId,
     post: posts !== {} ? posts[postId] : {},
   };
@@ -68,7 +72,9 @@ const mapDispatchToProps = dispatch => ({
   removePost: id => dispatch(handleRemovePost(id)),
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(Post);
+export default withRouter(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps,
+  )(Post),
+);

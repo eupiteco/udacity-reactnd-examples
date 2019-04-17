@@ -48,7 +48,7 @@ Um agregador de conteúdo, semelhante ao reddit ou hackernews, em que é possív
 		- Texto OK
 		- Data legível OK
 	* Controles para votar OK
-	* Editar
+	* Editar OK
 	* Remover OK
 	* Form para comentários OK
 	* Ações OK
@@ -88,7 +88,7 @@ Um agregador de conteúdo, semelhante ao reddit ou hackernews, em que é possív
 		- Categoria OK
 	* Comentário OK
 		- Texto OK
-	* Ações
+	* Ações OK
 		- GET _obj from _objList OK
 		- POST _obj in _objList OK
 

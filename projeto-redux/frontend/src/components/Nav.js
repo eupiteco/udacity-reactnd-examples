@@ -12,17 +12,17 @@ class Nav extends React.Component {
         <Link className="new-post-btn" to="/new">
           Add Post
         </Link>
-        <h3>Categories</h3>
+        <h4>Categories</h4>
         <Categories />
-        <h3> Sort posts by</h3>
+        <h4> Sort posts by</h4>
         <ul>
           <li>
-            <button className="sort" onClick={this.props.sortByDate}>
+            <button className="sort-btn" onClick={this.props.sortByDate}>
               Date
             </button>
           </li>
           <li>
-            <button className="sort" onClick={this.props.sortByScore}>
+            <button className="sort-btn" onClick={this.props.sortByScore}>
               Score
             </button>
           </li>

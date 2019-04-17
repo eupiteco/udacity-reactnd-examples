@@ -2,6 +2,7 @@ a {
   color: #393;
   text-decoration: none;
 }
+
 button,
 .btn {
   background-color: transparent;
@@ -16,6 +17,10 @@ button,
 .icon-btn {
   padding: 5px 0;
   height: 0.5rem;
+}
+
+.sort-btn {
+  padding: 0;
 }
 
 li {
@@ -40,6 +45,10 @@ select {
   border: 1px solid #393;
   border-radius: 3px;
   color: #eee;
+}
+
+.btn[disabled] {
+  background-color: #3939;
 }
 
 .btn-cancel {
@@ -132,8 +141,20 @@ select {
   padding: 10px;
   max-width: 600px;
 }
+.edit-comment,
 .new-comment {
   margin: 10px 0;
+}
+
+.edit-comment {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+	margin: 20px 0;
+}
+
+.edit-comment .buttons {
+	float: none;
 }
 
 .title-input,
@@ -160,7 +181,7 @@ select {
 }
 
 .buttons {
-  float: right;
+	float: right;
 }
 
 .rem-ed-buttons {
@@ -181,7 +202,7 @@ select {
   align-items: center;
   margin-bottom: 20px;
   padding: 20px;
-	position: relative;
+  position: relative;
   transition: box-shadow 0.3s ease-out;
   width: 600px;
 }

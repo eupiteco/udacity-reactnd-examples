@@ -11,20 +11,25 @@ class NewComment extends React.Component {
   render() {
     return (
       <div className="new-comment">
-        <form onSubmit={this.handleSubmit}>
-          <textarea
-            placeholder="Submit a new Comment"
-            className="body-input"
-            value={this.state.body}
-            onChange={this.handleBody}
-          />
-          <div className="buttons">
-            <button className="btn btn-cancel">Cancel</button>
-            <button className="btn btn-submit" type="submit">
-              Submit
-            </button>
-          </div>
-        </form>
+        <textarea
+          placeholder="Submit a new Comment"
+          className="body-input"
+          value={this.state.body}
+          onChange={this.handleBody}
+        />
+        <div className="buttons">
+          <button
+            className="btn btn-cancel"
+            onClick={() => this.setState({body: ''})}>
+            Cancel
+          </button>
+          <button
+            className="btn btn-submit"
+            onClick={this.handleSubmit}
+            disabled={this.state.body === ''}>
+            Submit
+          </button>
+        </div>
       </div>
     );
   }
@@ -43,15 +48,15 @@ class NewComment extends React.Component {
     const {author, parentId, sendComment} = this.props;
     const {body} = this.state;
     sendComment({id, timestamp, author, body, parentId});
-    this.setState(() => ({body: ''}));
+    this.setState({body: ''});
   };
 }
 
-const mapStateToProps = ({ flags}, { match, id }) => ({
-	author: flags.authedUser,
-	parentId: match.params.id,
-	id,
-})
+const mapStateToProps = ({flags}, {match, id}) => ({
+  author: flags.authedUser,
+  parentId: match.params.id,
+  id,
+});
 
 const mapDispatchToProps = dispatch => ({
   sendComment: data => dispatch(handleNewComment(data)),

@@ -2,9 +2,9 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {Redirect} from 'react-router-dom';
 import {generateHash} from '../utils/helpers';
-import {handleNewPost} from '../actions/posts';
+import {handleEditPost} from '../actions/posts';
 
-class NewPost extends React.Component {
+class EditPost extends React.Component {
   state = {
     title: '',
     body: '',
@@ -12,14 +12,22 @@ class NewPost extends React.Component {
     toHome: false,
   };
 
+  componentDidMount() {
+    const {title, body, category} = this.props.post;
+    this.setState(() => ({
+      title,
+      body,
+      category,
+    }));
+  }
   render() {
     const {title, body, toHome} = this.state;
     const {categories, categoryIds} = this.props;
     if (toHome === true) return <Redirect to="/" />;
     return (
       <div>
-				<h1 className="center">New Post</h1>
-        <div className="new-post" >
+        <h1 className="center">Edit Post</h1>
+        <div className="new-post">
           <div className="inputs">
             <input
               type="text"
@@ -36,7 +44,10 @@ class NewPost extends React.Component {
             />
           </div>
           <div className="controls">
-            <select className="category-picker" onChange={this.handleCategory}>
+            <select
+              className="category-picker"
+              onChange={this.handleCategory}
+              value={this.state.category}>
               <option key="none" className="placeholder">
                 Choose a category
               </option>
@@ -48,14 +59,14 @@ class NewPost extends React.Component {
             <div className="buttons">
               <button
                 className="btn btn-cancel"
-								onClick={ () => this.setState({ toHome: true }) }>
+                onClick={() => this.setState({toHome: true})}>
                 Cancel
               </button>
               <button
                 className="btn btn-submit"
                 type="submit"
                 disabled={!this.isValid()}
-								onClick={this.handleSubmit}>
+                onClick={this.handleSubmit}>
                 Submit
               </button>
             </div>
@@ -67,19 +78,14 @@ class NewPost extends React.Component {
 
   handleSubmit = e => {
     e.preventDefault();
-    const timestamp = Date.now();
-    const id = generateHash();
-    const {title, body, category} = this.state;
-    const author = this.props.authedUser;
+    const {id} = this.props;
+    const {title, body} = this.state;
     const newPost = {
-      id,
       title,
       body,
-      category,
-      author,
-      timestamp,
     };
-    this.props.handleNewPost(newPost);
+		console.log("NO COMPONENTE: ", id, newPost)
+    this.props.handleEditPost(id, newPost);
 
     this.setState(() => ({
       title: '',
@@ -119,19 +125,22 @@ class NewPost extends React.Component {
 
 function mapDispatchToProps(dispatch) {
   return {
-    handleNewPost: data => dispatch(handleNewPost(data)),
+    handleEditPost: (id, params) => dispatch(handleEditPost(id, params)),
   };
 }
 
-function mapStateToProps({categories, flags}) {
+function mapStateToProps({posts, categories, flags}, {match}) {
   const {authedUser} = flags;
+  const {id} = match.params;
   return {
     authedUser,
     categories,
     categoryIds: Object.keys(categories),
+    id,
+    post: posts[id],
   };
 }
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(NewPost);
+)(EditPost);

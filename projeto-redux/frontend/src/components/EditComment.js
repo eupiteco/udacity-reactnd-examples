@@ -12,7 +12,7 @@ class EditComment extends React.Component {
 
   render() {
     return (
-      <div className="new-comment">
+      <div className="edit-comment">
         <textarea
           className="body-input"
           value={this.state.body}
