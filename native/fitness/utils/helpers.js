@@ -85,7 +85,7 @@ export function getMetricMetaInfo(metric) {
       displayName: 'Swim',
       max: 9900,
       unit: 'm',
-      step: 1,
+      step: 100,
       type: 'steppers',
       getIcon() {
         return (
