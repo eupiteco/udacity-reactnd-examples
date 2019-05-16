@@ -1,7 +1,14 @@
 import React from 'react';
-import {View, TouchableOpacity, Text} from 'react-native';
+import {connect} from 'react-redux';
+import {View, TouchableOpacity, Text, StyleSheet, Platform} from 'react-native';
 import {Ionicons} from '@expo/vector-icons';
-import {getMetricMetaInfo, timeToString} from '../utils/helpers';
+import {
+  getMetricMetaInfo,
+  timeToString,
+  getDailyReminderValue,
+} from '../utils/helpers';
+import {submitEntry, removeEntry} from '../utils/api';
+import {addEntry, receiveEntries} from '../actions';
 import FitSlider from './FitSlider';
 import FitSteppers from './FitSteppers';
 import DateHeader from './DateHeader';
@@ -47,9 +54,13 @@ class AddEntry extends React.Component {
 
   reset = () => {
     const key = timeToString();
-    //Update Redux
+    this.props.dispatch;
     //send to homescreen
-    //Update "DB"
+    this.props.dispatch(
+      addEntry({
+        [key]: getDailyReminderValue(),
+      }),
+    );
   };
 
   slide = (metric, value) => {
@@ -62,7 +73,11 @@ class AddEntry extends React.Component {
   submit = () => {
     const key = timeToString();
     const entry = this.state;
-    //Update Redux
+    this.props.dispatch(
+      addEntry({
+        [key]: entry,
+      }),
+    );
     //Update UI
     this.setState(() => ({
       run: 0,
@@ -71,7 +86,7 @@ class AddEntry extends React.Component {
       sleep: 0,
       eat: 0,
     }));
-    //Update "DB"
+    submitEntry({entry, key});
     //Navigate to homescreen
     //Clean local notification
   };
@@ -91,32 +106,59 @@ class AddEntry extends React.Component {
       <View>
         <DateHeader date={new Date().toLocaleDateString()} />
         {Object.keys(metaInfo).map(key => {
-          const {value, type, ...rest} = getMetricMetaInfo(key);
+          const {value, type, displayName, ...rest} = getMetricMetaInfo(key);
           return (
-            <View key={key}>
+            <View style={styles.container} key={key}>
               {getMetricMetaInfo(key).getIcon()}
-              {type === 'slider' ? (
-                <FitSlider
-                  onChange={value => this.slide(key, value)}
-                  value={this.state[key]}
-                  {...rest}
-                />
-              ) : (
-                <FitSteppers
-                  value={value}
-                  onIncrement={() => this.increment(key)}
-                  onDecrement={() => this.decrement(key)}
-                  value={this.state[key]}
-                  {...rest}
-                />
-              )}
+              <View>
+                <Text style={styles.displayName}>{displayName}</Text>
+                {type === 'slider' ? (
+                  <FitSlider
+                    onChange={value => this.slide(key, value)}
+                    value={this.state[key]}
+                    {...rest}
+                  />
+                ) : (
+                  <FitSteppers
+                    value={value}
+                    onIncrement={() => this.increment(key)}
+                    onDecrement={() => this.decrement(key)}
+                    value={this.state[key]}
+                    {...rest}
+                  />
+                )}
+              </View>
             </View>
           );
         })}
-        <SubmitButton onPress={this.submit} />
+        <SubmitButton
+          onPress={this.submit}
+          style={
+            Platform.os === 'ios' ? styles.iosSubmitButton : styles.androidSubmitButton
+          }
+        />
       </View>
     );
   }
 }
 
-export default AddEntry;
+const styles = StyleSheet.create({
+  container: {
+		flexDirection: "row",
+		padding: 10,
+		margin: 5,
+	},
+  displayName: {},
+  androidSubmitButton: {},
+  iosSubmitButton: {},
+});
+
+function mapStateToProps(state) {
+  const key = timeToString();
+
+  return {
+    alreadyLogged: state[key] && typeof state[key].today === 'undefined',
+  };
+}
+
+export default connect(mapStateToProps)(AddEntry);
