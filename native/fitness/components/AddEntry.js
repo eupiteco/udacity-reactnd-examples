@@ -8,6 +8,7 @@ import {
   getDailyReminderValue,
 } from '../utils/helpers';
 import {submitEntry, removeEntry} from '../utils/api';
+import {lightPurp, white} from '../utils/colors';
 import {addEntry, receiveEntries} from '../actions';
 import FitSlider from './FitSlider';
 import FitSteppers from './FitSteppers';
@@ -16,8 +17,15 @@ import TextBtn from './TextBtn';
 
 function SubmitButton({onPress}) {
   return (
-    <TouchableOpacity onPress={onPress}>
-      <Text>SUBMIT</Text>
+    <TouchableOpacity
+      onPress={onPress}
+      style={[
+        styles.submitButton,
+        Platform.os === 'ios'
+          ? styles.iosSubmitButton
+          : styles.androidSubmitButton,
+      ]}>
+      <Text style={styles.submitButtonText}>SUBMIT</Text>
     </TouchableOpacity>
   );
 }
@@ -103,12 +111,12 @@ class AddEntry extends React.Component {
     }
     const metaInfo = getMetricMetaInfo();
     return (
-      <View>
+      <View style={styles.container}>
         <DateHeader date={new Date().toLocaleDateString()} />
         {Object.keys(metaInfo).map(key => {
           const {value, type, displayName, ...rest} = getMetricMetaInfo(key);
           return (
-            <View style={styles.container} key={key}>
+            <View style={styles.controlsContainer} key={key}>
               {getMetricMetaInfo(key).getIcon()}
               <View>
                 <Text style={styles.displayName}>{displayName}</Text>
@@ -131,26 +139,43 @@ class AddEntry extends React.Component {
             </View>
           );
         })}
-        <SubmitButton
-          onPress={this.submit}
-          style={
-            Platform.os === 'ios' ? styles.iosSubmitButton : styles.androidSubmitButton
-          }
-        />
+        <SubmitButton onPress={this.submit} />
       </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  container: {
-		flexDirection: "row",
-		padding: 10,
-		margin: 5,
+	container: {
+		padding: 15,
 	},
-  displayName: {},
-  androidSubmitButton: {},
-  iosSubmitButton: {},
+  controlsContainer: {
+    flexDirection: 'row',
+		marginBottom: 30,
+  },
+  displayName: {
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+  submitButton: {
+    backgroundColor: lightPurp,
+		padding: 15,
+		width: 180,
+  },
+  submitButtonText: {
+    color: white,
+    fontSize: 18,
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  androidSubmitButton: {
+		borderRadius: 10,
+		alignSelf: "flex-end",
+	},
+  iosSubmitButton: {
+		borderRadius: 4,
+		alignSelf: "center",
+	},
 });
 
 function mapStateToProps(state) {

@@ -1,8 +1,17 @@
-import React from 'react'
-import {Text} from 'react-native'
+import React from 'react';
+import {lightPurp} from '../utils/colors';
+import {Text} from 'react-native';
 
 export default function DateHeader({date}) {
-	return (
-		<Text>{date}</Text>
-	)
+  return (
+    <Text
+      style={{
+        color: lightPurp,
+				marginBottom: 10,
+        fontSize: 18,
+        fontWeight: 'bold',
+      }}>
+      {date}
+    </Text>
+  );
 }
